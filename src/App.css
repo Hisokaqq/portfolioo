@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+*{
+    font-family: 'Inter', sans-serif;
+    color: #3e3e3d;
+
+}
+
+body{
+    user-select: none;
+}
+
+.container-title{
+    width: 5rem;
+}
+
+.title{
+    font-weight: 600;
+    line-height: .8;
+}
+
+
+.name{
+    font-weight: 300;
+    line-height: .8;
+}
+
+.explore{
+  cursor: pointer;
+}
+
+.explore h3,
+.explore .line {
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+
+.explore:hover h3 {
+    color: #838383;
+}
+
+.explore:hover .line {
+    background-color: #838383;
+}
+
+.gradient-background {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(to bottom, white, #FDC1BD);
+  }
+  
+
+  
+  .loader-cont{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
+  .bouncing-loader {
+    display: flex;
+    justify-content: center;
+    margin: 40px auto;
+  }
+  
+  .bouncing-loader > div {
+    width: 32px;
+    height: 32px;
+    margin: 6px 12px;
+    border-radius: 50%;
+    background-color: #FDC1BD;
+    opacity: 1;
+    animation: bouncing-loader 0.6s infinite alternate;
+  }
+  
+  @keyframes bouncing-loader {
+    to {
+      opacity: 0.1;
+      transform: translateY(-32px);
+    }
+  }
+  
+  .bouncing-loader > div:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .bouncing-loader > div:nth-child(3) {
+    animation-delay: 0.4s;
+  }
