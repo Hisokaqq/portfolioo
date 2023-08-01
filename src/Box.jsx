@@ -20,7 +20,7 @@ function Box(props) {
     <motion.group animate={props.isOpen ? "open"  : "closed"} variants={variants}>
     <motion.group variants={moveAnimation} animate="show" initial="hidden">
     
-    <motion.group scale={.2} {...props} dispose={null}>
+    <motion.group scale={.15} {...props} dispose={null}>
       <group position={[0, -0.557, 0]}>
         <mesh castShadow receiveShadow geometry={nodes.Cube.geometry} material={materials.Walls} />
         <mesh geometry={nodes.Cube_1.geometry} material={materials['Walls.001']} />
