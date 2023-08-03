@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.2.10 Box.glb --transform
 Files: Box.glb [1.32KB] > Box-transformed.glb [1.11KB] (16%)
 */
 
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { AccumulativeShadows, Float, RandomizedLight, useGLTF } from '@react-three/drei'
 import { motion } from "framer-motion-3d"
 import { BoxAnimation, moveAnimation } from './helpers/AnimationVar'
@@ -15,12 +15,30 @@ const variants = {
 }
 function Box(props) {
   const { nodes, materials } = useGLTF('./models/Box.glb')
-  console.log(props.isOpen)
+    const [scale, setScale] = useState(0.15)
+    const handleResize = () => {
+      if (window.innerWidth < 800) {
+        setScale(0.1);
+      } else {
+        setScale(0.15);
+      }
+    };
+  
+    useEffect(() => {
+      // Add event listener for window resize
+      window.addEventListener('resize', handleResize);
+  
+      // Cleanup the event listener when the component unmounts
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+  
   return (
     <motion.group animate={props.isOpen ? "open"  : "closed"} variants={variants}>
     <motion.group variants={moveAnimation} animate="show" initial="hidden">
     
-    <motion.group scale={.15} {...props} dispose={null}>
+    <motion.group scale={scale} {...props} dispose={null}>
       <group position={[0, -0.557, 0]}>
         <mesh castShadow receiveShadow geometry={nodes.Cube.geometry} material={materials.Walls} />
         <mesh geometry={nodes.Cube_1.geometry} material={materials['Walls.001']} />
