@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Box from '../Box'
 import Env from './Env'
 import HtmlPart from './HtmlPart'
+import Cursor from '../helpers/Cursor'
 
 const Experience = () => {
     const [perfSucks, degrade] = useState(false)
@@ -26,6 +27,7 @@ const Experience = () => {
           </group>
           <Html fullscreen  style={{ position: "absolute", left:0, top:0, transform: "translate(-50%, -50%)" }}>
             <HtmlPart isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <Cursor />
           </Html>
           
         </Canvas>
