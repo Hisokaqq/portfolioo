@@ -9,6 +9,8 @@ const variants = {
 const HtmlPart = ({isOpen, setIsOpen}) => {
   return (
     <div className="w-[100%] h-[100vh] z-20 fixed top-0 left-0 overflow-hidden">
+      
+
     <motion.div   animate={isOpen ? "open"  : "closed"}
     variants={variants}>
         <motion.div variants={parentAnimation} initial="hidden" animate="show" className="  p-3 sm:p-7 md:p-10 absolute flex flex-col gap-3 sm:gap-5 md:gap-7 lg:gap-10 xl:w-[35rem] md:w-[30rem] sm:w-[20rem] w-[10rem] 2xl:text-9xl lg:text-8xl md:text-7xl sm:text-6xl text-2xl">
