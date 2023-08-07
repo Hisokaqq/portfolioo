@@ -4,11 +4,14 @@ import App from './App.jsx'
 import './index.css'
 import HtmlPart from './components/HtmlPart.jsx'
 import Loader from './components/Loader.jsx'
+import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Suspense fallback={<Loader/>}>
-      <App/>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
     </Suspense>
 
   </React.StrictMode>,

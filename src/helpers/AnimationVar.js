@@ -52,6 +52,12 @@ export const parentAnimation = {
         delayChildren: htmlDelay,
         duration: 0,
       }
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 100,
+      }
     }
   };
   

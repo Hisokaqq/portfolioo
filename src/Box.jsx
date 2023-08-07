@@ -226,9 +226,7 @@ function Box(props) {
       </Float>
       
       <motion.mesh variants={BoxAnimation}  geometry={nodes.Loader.geometry} material={materials.Walls} position={[-4.796, 0, -4.828]} receiveShadow castShadow />
-      <group>
-        
-      </group>
+      
         
     </motion.group>
     <AccumulativeShadows frames={100} alphaTest={0.85} opacity={0.8} color="red" scale={20} position={[0, -0.005, 0]}>
