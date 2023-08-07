@@ -41,7 +41,7 @@ export const moveAnimation = {
     
 };
 
-const htmlDelay = 4
+const htmlDelay = 2
 
 export const parentAnimation = {
     hidden: { },
