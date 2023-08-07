@@ -69,9 +69,9 @@ const HtmlPart2 = () => {
     </motion3d.group>
 
   </Canvas>
-  <motion.div  initial={{opacity: 0}} animate={{opacity: 1, transition:{duration:1, delay: 1.5}}} className="fixed top-0 left-0">
+  <div  className="fixed top-0 left-0">
     <Link to={"/"} className="font-bold p-3 text-lg text-black hover:text-gray-400 duration-300">Go Back</Link>
-  </motion.div>
+  </div>
   </div>
 
   )
