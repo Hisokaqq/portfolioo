@@ -20,14 +20,12 @@ export const BoxAnimation = {
 export const moveAnimation = {
     hidden: {
         scale: .2,
-        x: 5,
-        y: 1,
+        x: 20,
         rotateY: 2,
         
     },
     show: {
         x: 0,
-        y: 0,
         rotateY: 0,
         scale: 1,
         transition: {

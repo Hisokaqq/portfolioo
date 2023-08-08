@@ -5,7 +5,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useIntersect, Image, ScrollControls, Scroll } from '@react-three/drei'
 import { motion as motion3d} from 'framer-motion-3d'
 import { motion, useAnimation } from 'framer-motion'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 
 
 function Item({ url, scale, ...props }) {
@@ -43,7 +43,7 @@ function Item({ url, scale, ...props }) {
     )
   }
 
-const HtmlPart2 = () => {
+const Projects = () => {
   const navigate = useNavigate()
   const control = useAnimation()
   const control2 = useAnimation()
@@ -58,6 +58,7 @@ const HtmlPart2 = () => {
   return (
     <div className="h-screen w-screen">
     <Canvas orthographic camera={{ zoom: 80 }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
+
     <color attach="background" args={['#f0f0f0']} />
     <motion3d.group animate={control}>
     <motion3d.group initial={{y: -20}} animate={{y: 0, transition:{duration:1}}}>
@@ -93,4 +94,4 @@ const HtmlPart2 = () => {
   )
 }
 
-export default HtmlPart2
+export default Projects

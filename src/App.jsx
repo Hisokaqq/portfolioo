@@ -1,11 +1,9 @@
 
-import { useState } from 'react'
 import './App.css'
-import Experience from './components/Experience'
-import Cursor from './helpers/Cursor'
+import Experience from './pages/Experience'
 import { AnimatePresence } from 'framer-motion'
 import { Route, Routes, useLocation } from 'react-router-dom'
-import HtmlPart2 from './components/HtmlPart2'
+import Projects from './pages/Projects'
 function App() {
   const location = useLocation();
   return (
@@ -21,11 +19,11 @@ function App() {
           />
       <Route
             path="/me"
-            element={<HtmlPart2  />}
+            element={<Projects />}
           />    
        <Route
             path="/projects"
-            element={<HtmlPart2  />}
+            element={<Projects  />}
           /> 
     
       </Routes>
