@@ -4,6 +4,8 @@ import Experience from './pages/Experience'
 import { AnimatePresence } from 'framer-motion'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Projects from './pages/Projects'
+import Me_contact from './pages/Me_contact'
+
 function App() {
   const location = useLocation();
   return (
@@ -19,7 +21,7 @@ function App() {
           />
       <Route
             path="/me"
-            element={<Projects />}
+            element={<Me_contact />}
           />    
        <Route
             path="/projects"
@@ -28,7 +30,6 @@ function App() {
     
       </Routes>
       </AnimatePresence>
-      
     </div>
   )
 }

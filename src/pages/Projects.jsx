@@ -2,10 +2,11 @@ import React from 'react'
 import * as THREE from 'three'
 import { useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useIntersect, Image, ScrollControls, Scroll } from '@react-three/drei'
+import { useIntersect, Image, ScrollControls, Scroll, Html } from '@react-three/drei'
 import { motion as motion3d} from 'framer-motion-3d'
 import { motion, useAnimation } from 'framer-motion'
 import {  useNavigate } from 'react-router-dom'
+import Env from '../components/Env'
 
 
 function Item({ url, scale, ...props }) {
@@ -22,15 +23,18 @@ function Item({ url, scale, ...props }) {
     return (
       <group {...props}>
         <Image ref={ref} onPointerOver={() => hover(true)} onPointerOut={() => hover(false)} scale={scale} url={url} />
+        
       </group>
     )
   }
 
   function Items() {
     const { width: w, height: h } = useThree((state) => state.viewport)
+    const navigate = useNavigate()
+
     return (
       <Scroll>
-        <Item url="../images/1.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
+        <Item onClick={()=>{navigate("https://github.com/")}} url="../images/1.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
         <Item url="../images/2.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
         <Item url="../images/3.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 1, 0]} />
         <Item url="../images/4.jpg" scale={[w / 5, w / 5, 1]} position={[w / 4, -h * 1.2, 0]} />
@@ -47,6 +51,7 @@ const Projects = () => {
   const navigate = useNavigate()
   const control = useAnimation()
   const control2 = useAnimation()
+  const [perfSucks, degrade] = useState(false)
 
   const goBack = () => {
         control.start({y:-20, transition: {duration: 1.3}})
@@ -57,9 +62,12 @@ const Projects = () => {
   }
   return (
     <div className="h-screen w-screen">
-    <Canvas orthographic camera={{ zoom: 80 }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
+    <Canvas   eventPrefix="client" camera={{ zoom: 1,  fov: 60  }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
 
     <color attach="background" args={['#f0f0f0']} />
+    <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
+w       <Env perfSucks={perfSucks} />
+    </group>
     <motion3d.group animate={control}>
     <motion3d.group initial={{y: -20}} animate={{y: 0, transition:{duration:1}}}>
 
