@@ -58,7 +58,7 @@ const Projects = () => {
         control2.start({opacity: 0, transition: {duration: .3}})
         setTimeout(() => {
           navigate("/");
-        }, 1300); 
+        }, 300); 
   }
   return (
     <div className="h-screen w-screen">
@@ -90,7 +90,6 @@ w       <Env perfSucks={perfSucks} />
         </h1>
       </motion.div>
       </motion.div>
-
       </Scroll>
     </ScrollControls>
     </motion3d.group>

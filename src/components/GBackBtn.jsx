@@ -1,12 +1,19 @@
 import React from 'react'
 import { motion } from 'framer-motion-3d'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
 
 const GBackBtn = ({goBack}) => {
 
   return (
-    <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition:{duration:1, delay: .5}}} className="fixed top-0 left-0">
-        <div onClick={goBack} className="font-bold p-3 text-lg text-black hover:text-gray-400 duration-300">Go Back</div>
-    </motion.div>
+    <div className="fixed top-0 left-0">
+      <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition:{duration:1, delay: .5}}} className="fixed top-0 left-0 ">
+        <p onClick={goBack}  className="font-bold p-3 text-lg text-black hover:text-gray-600 duration-300"> <FontAwesomeIcon style={{color:"#6DB65B"}}  icon={faArrowLeft} className="mr-2"/> Go Back</p>
+      </motion.div>
+
+      <div className=""></div>
+    </div>
   )
 }
 
