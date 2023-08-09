@@ -94,7 +94,9 @@ w       <Env perfSucks={perfSucks} />
     </motion3d.group>
 
   </Canvas>
-  <GBackBtn goBack={goBack} />
+   <motion.div animate={control2}>
+    <GBackBtn goBack={goBack} />
+  </motion.div>
   </div>
 
   )
