@@ -2,25 +2,12 @@ const delay1 = .3;
 const delay2 = 4
 const delay3 = 2
 
-export const BoxAnimation = {
-    hidden: {
-        scale: 1.03,
-    },
-    show: {
-        scale: 0,
-        transition: {
-            duration: 1.5,
-            ease: "easeOut",
-            delay: delay1,
-           
-        },
-    },
-};
+
 
 export const moveAnimation = {
     hidden: {
         scale: .2,
-        x: 20,
+        x: 30,
         rotateY: 2,
         
     },

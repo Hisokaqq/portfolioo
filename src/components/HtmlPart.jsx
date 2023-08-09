@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const variants = {
     open: { opacity: 1 },
-    closed: { opacity: 0, transition: { duration: 1.5 } },
+    closed: { opacity: 0, transition: { duration: .3 } },
   }
 const HtmlPart = ({isOpen, setIsOpen, goinTo}) => {
     const nav_anim = (to) => {

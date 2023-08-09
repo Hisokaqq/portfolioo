@@ -7,9 +7,10 @@ import { motion as motion3d} from 'framer-motion-3d'
 import { motion, useAnimation } from 'framer-motion'
 import {  useNavigate } from 'react-router-dom'
 import Env from '../components/Env'
+import GBackBtn from '../components/GBackBtn'
 
 
-function Item({ url, scale, ...props }) {
+function Item({ url, scale, url2, ...props }) {
     const visible = useRef(false)
     const [hovered, hover] = useState(false)
     const ref = useIntersect((isVisible) => (visible.current = isVisible))
@@ -21,28 +22,27 @@ function Item({ url, scale, ...props }) {
       ref.current.material.grayscale = THREE.MathUtils.damp(ref.current.material.grayscale, hovered ? 1 : 0, 4, delta)
     })
     return (
-      <group {...props}>
-        <Image ref={ref} onPointerOver={() => hover(true)} onPointerOut={() => hover(false)} scale={scale} url={url} />
-        
+      <group {...props} >
+        <Image onClick={()=>{window.open(url2, '_blank')}} ref={ref} onPointerOver={() =>{ hover(true); document.body.style.cursor =  'pointer' }} onPointerOut={() => {hover(false); document.body.style.cursor =  'auto'}} scale={scale} url={url}  >
+        </Image>
       </group>
     )
   }
 
   function Items() {
     const { width: w, height: h } = useThree((state) => state.viewport)
-    const navigate = useNavigate()
 
     return (
       <Scroll>
-        <Item onClick={()=>{navigate("https://github.com/")}} url="../images/1.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
-        <Item url="../images/2.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
-        <Item url="../images/3.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 1, 0]} />
-        <Item url="../images/4.jpg" scale={[w / 5, w / 5, 1]} position={[w / 4, -h * 1.2, 0]} />
-        <Item url="../images/5.jpg" scale={[w / 5, w / 5, 1]} position={[w / 10, -h * 1.75, 0]} />
-        <Item url="../images/6.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 4, -h * 2, 0]} />
-        <Item url="../images/7.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 2.6, 0]} />
-        <Item url="../images/8.jpg" scale={[w / 2, w / 2, 1]} position={[w / 4, -h * 3.1, 0]} />
-        <Item url="../images/9.jpg" scale={[w / 2.5, w / 2, 1]} position={[-w / 6, -h * 4.1, 0]} />
+        <Item url2="https://github.com/" url="../images/1.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
+        <Item url2="https://github.com/" url="../images/2.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
+        <Item url2="https://github.com/" url="../images/3.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 1, 0]} />
+        <Item url2="https://github.com/" url="../images/4.jpg" scale={[w / 5, w / 5, 1]} position={[w / 4, -h * 1.2, 0]} />
+        <Item url2="https://github.com/" url="../images/5.jpg" scale={[w / 5, w / 5, 1]} position={[w / 10, -h * 1.75, 0]} />
+        <Item url2="https://github.com/" url="../images/6.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 4, -h * 2, 0]} />
+        <Item url2="https://github.com/" url="../images/7.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 2.6, 0]} />
+        <Item url2="https://github.com/" url="../images/8.jpg" scale={[w / 2, w / 2, 1]} position={[w / 4, -h * 3.1, 0]} />
+        <Item url2="https://github.com/" url="../images/9.jpg" scale={[w / 2.5, w / 2, 1]} position={[-w / 6, -h * 4.1, 0]} />
       </Scroll>
     )
   }
@@ -54,8 +54,8 @@ const Projects = () => {
   const [perfSucks, degrade] = useState(false)
 
   const goBack = () => {
-        control.start({y:-20, transition: {duration: 1.3}})
-        control2.start({opacity: 0, transition: {duration: 1.3}})
+        control.start({y:-20, transition: {duration: .3}})
+        control2.start({opacity: 0, transition: {duration: .3}})
         setTimeout(() => {
           navigate("/");
         }, 1300); 
@@ -94,9 +94,7 @@ w       <Env perfSucks={perfSucks} />
     </motion3d.group>
 
   </Canvas>
-  <div  className="fixed top-0 left-0">
-    <div onClick={goBack} className="font-bold p-3 text-lg text-black hover:text-gray-400 duration-300">Go Back</div>
-  </div>
+  <GBackBtn goBack={goBack} />
   </div>
 
   )
