@@ -75,6 +75,9 @@ w       <Env perfSucks={perfSucks} />
       <Items />
       <Scroll html style={{ width: '100%' }}>
       <motion.div animate={control2}>
+    <GBackBtn goBack={goBack} />
+  </motion.div>
+      <motion.div animate={control2}>
       <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition:{duration:1, delay: .5}}}>
         <h1 className="h1" style={{ position: 'absolute', top: '180vh', left: '10vw' }}>creating</h1>
         <h1 className="h1" style={{ position: 'absolute', top: `100vh`, right: '20vw', transform: `translate3d(0,-100%,0)` }}>awesome</h1>
@@ -94,9 +97,7 @@ w       <Env perfSucks={perfSucks} />
     </motion3d.group>
 
   </Canvas>
-   <motion.div animate={control2}>
-    <GBackBtn goBack={goBack} />
-  </motion.div>
+   
   </div>
 
   )
