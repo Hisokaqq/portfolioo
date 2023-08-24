@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Projects from './pages/Projects'
 import Me_contact from './pages/Me_contact'
+import SingleProject from './pages/SingleProject'
 
 function App() {
   const location = useLocation();
@@ -27,7 +28,9 @@ function App() {
             path="/projects"
             element={<Projects  />}
           /> 
-    
+       <Route 
+            path="/projects/project/:id"
+            element={<SingleProject />} />
       </Routes>
       </AnimatePresence>
     </div>

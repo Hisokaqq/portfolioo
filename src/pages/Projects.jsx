@@ -9,13 +9,12 @@ import {  useNavigate } from 'react-router-dom'
 import Env from '../components/Env'
 import GBackBtn from '../components/GBackBtn'
 
-
-function Item({ url, scale, url2, ...props }) {
+function Item({ url, scale, id, ...props }) {
     const visible = useRef(false)
     const [hovered, hover] = useState(false)
     const ref = useIntersect((isVisible) => (visible.current = isVisible))
     const { height } = useThree((state) => state.viewport)
-
+    const navigate = useNavigate()
     useFrame((state, delta) => {
       ref.current.position.y = THREE.MathUtils.damp(ref.current.position.y, visible.current ? 0 : -height / 2 + 1, 4, delta)
       ref.current.material.zoom = THREE.MathUtils.damp(ref.current.material.zoom, visible.current ? 1 : 1.5, 4, delta)
@@ -23,7 +22,7 @@ function Item({ url, scale, url2, ...props }) {
     })
     return (
       <group {...props} >
-        <Image onClick={()=>{window.open(url2, '_blank')}} ref={ref} onPointerOver={() =>{ hover(true); document.body.style.cursor =  'pointer' }} onPointerOut={() => {hover(false); document.body.style.cursor =  'auto'}} scale={scale} url={url}  >
+        <Image onClick={()=>navigate(`project/${id}`)} ref={ref} onPointerOver={() =>{ hover(true); document.body.style.cursor =  'pointer' }} onPointerOut={() => {hover(false); document.body.style.cursor =  'auto'}} scale={scale} url={url}  >
         </Image>
       </group>
     )
@@ -34,15 +33,15 @@ function Item({ url, scale, url2, ...props }) {
 
     return (
       <Scroll>
-        <Item url2="https://github.com/" url="../images/1.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
-        <Item url2="https://github.com/" url="../images/2.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
-        <Item url2="https://github.com/" url="../images/3.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 1, 0]} />
-        <Item url2="https://github.com/" url="../images/4.jpg" scale={[w / 5, w / 5, 1]} position={[w / 4, -h * 1.2, 0]} />
-        <Item url2="https://github.com/" url="../images/5.jpg" scale={[w / 5, w / 5, 1]} position={[w / 10, -h * 1.75, 0]} />
-        <Item url2="https://github.com/" url="../images/6.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 4, -h * 2, 0]} />
-        <Item url2="https://github.com/" url="../images/7.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 2.6, 0]} />
-        <Item url2="https://github.com/" url="../images/8.jpg" scale={[w / 2, w / 2, 1]} position={[w / 4, -h * 3.1, 0]} />
-        <Item url2="https://github.com/" url="../images/9.jpg" scale={[w / 2.5, w / 2, 1]} position={[-w / 6, -h * 4.1, 0]} />
+        <Item id="1" url="../images/1.png" scale={[w / 2, w / 4, 1]} position={[-w / 6, 0, 0]} />
+        <Item id="1" url="../images/2.png" scale={[w/3, w / 7, 1]} position={[w / 30, -h, 0]} />
+        <Item id="1" url="../images/3.png" scale={[w / 4, w / 8, 1]} position={[-w / 4, -h * 1, 0]} />
+        <Item id="1" url="../images/4.jpg" scale={[w / 5, w / 5, 1]} position={[w / 4, -h * 1.2, 0]} />
+        <Item id="1" url="../images/5.jpg" scale={[w / 5, w / 5, 1]} position={[w / 10, -h * 1.75, 0]} />
+        <Item id="1" url="../images/6.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 4, -h * 2, 0]} />
+        <Item id="1" url="../images/7.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 2.6, 0]} />
+        <Item id="1" url="../images/8.jpg" scale={[w / 2, w / 2, 1]} position={[w / 4, -h * 3.1, 0]} />
+        <Item id="1" url="../images/9.jpg" scale={[w / 2.5, w / 2, 1]} position={[-w / 6, -h * 4.1, 0]} />
       </Scroll>
     )
   }
