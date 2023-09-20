@@ -1,35 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import Example from '../components/Example'
-import { useAnimation } from 'framer-motion'
 import { motion } from 'framer-motion'
 import {VscGithubAlt} from 'react-icons/vsc'
 import {SiVercel} from 'react-icons/si'
-
-const prjects = [
-    {
-        id: 1,
-        name: "Project 1",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-        images: ["/images/1.jpg"],
-        urlgit: "https://github.com/",
-        urlvercel: "https://github.com/"
-    },
-    {
-        id: 2,
-        name: "Project 2",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-        images: ["/images/2.jpg"],
-        urlgit: "https://github.com/",
-        urlvercel: "https://github.com/"
-    },
-]
+import projects from '../components/projects'
 
 const SingleProject = () => {
     const {id} = useParams()
     const navigate = useNavigate()
-    const control = useAnimation()
-    const control2 = useAnimation()
-    const project = prjects.find((p) => p.id === Number(id))
+    const project = projects.find((p) => p.id === Number(id))
     const goBack = () => {
         navigate("/projects");
     }
@@ -41,8 +20,8 @@ const SingleProject = () => {
             </div>
             <div className='fixed top-0 right-0 flex gap-5 p-3 z-50'>
 
-                <VscGithubAlt onClick={()=>window.open("https://github.com/")}  color="white" fill="white" className="cursor-pointer text-3xl md:text-[2rem]"/>
-                <SiVercel onClick={()=>window.open("https://vercel.com/")}  color="white" fill="white" stroke="white" className="cursor-pointer text-3xl md:text-[2rem] "/>
+                <VscGithubAlt onClick={()=>window.open(project.urlgit)}  color="white" fill="white" className="cursor-pointer text-3xl md:text-[2rem]"/>
+                {project.urlvercel &&  <SiVercel onClick={()=>window.open(project.urlvercel)}  color="white" fill="white" stroke="white" className="cursor-pointer text-3xl md:text-[2rem] "/>}
             </div>
             <Example images={project.images}/>
 

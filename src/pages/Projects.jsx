@@ -34,14 +34,10 @@ function Item({ url, scale, id, ...props }) {
     return (
       <Scroll>
         <Item id="1" url="../images/1.png" scale={[w / 2, w / 4, 1]} position={[-w / 6, 0, 0]} />
-        <Item id="1" url="../images/2.png" scale={[w/3, w / 7, 1]} position={[w / 30, -h, 0]} />
-        <Item id="1" url="../images/3.png" scale={[w / 4, w / 8, 1]} position={[-w / 4, -h * 1, 0]} />
-        <Item id="1" url="../images/4.jpg" scale={[w / 5, w / 5, 1]} position={[w / 4, -h * 1.2, 0]} />
-        <Item id="1" url="../images/5.jpg" scale={[w / 5, w / 5, 1]} position={[w / 10, -h * 1.75, 0]} />
-        <Item id="1" url="../images/6.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 4, -h * 2, 0]} />
-        <Item id="1" url="../images/7.jpg" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 2.6, 0]} />
-        <Item id="1" url="../images/8.jpg" scale={[w / 2, w / 2, 1]} position={[w / 4, -h * 3.1, 0]} />
-        <Item id="1" url="../images/9.jpg" scale={[w / 2.5, w / 2, 1]} position={[-w / 6, -h * 4.1, 0]} />
+        <Item id="2" url="../images/2.png" scale={[w / 2, w / 4, 1]} position={[w / 30, -h, 0]} />
+        <Item id="3" url="../images/3.png" scale={[w / 2, w / 4, 1]} position={[w / 10, -h * 1.75, 0]} />
+        <Item id="4" url="../images/4.png" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 2.6, 0]} />
+        <Item id="5" url="../images/5.png" scale={[w / 2, w / 4, 1]} position={[-w / 6, -h * 3.8, 0]} />
       </Scroll>
     )
   }
