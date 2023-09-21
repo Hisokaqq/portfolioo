@@ -24,7 +24,7 @@ const Bubble = ({ isOpen, where=true }) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 800) {
-        setScale(0.3);
+        setScale(where ? 0.3 : .1);
       } else {
         setScale(0.6);
       }
