@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import Env from '../components/Env'
 import { Canvas } from '@react-three/fiber'
-import { Html, PerformanceMonitor, Scroll, ScrollControls } from '@react-three/drei'
+import {  PerformanceMonitor, Scroll, ScrollControls } from '@react-three/drei'
 import { useNavigate } from 'react-router-dom'
 import { useAnimation, motion } from 'framer-motion'
 import GBackBtn from '../components/GBackBtn'
 import Magnetic from '../components/Magnetic'
 import Me from '../components/Me'
 import Contact from '../components/Contact'
-import Bubble from '../components/Buble'
 
 const Me_contact = () => {
     const [perfSucks, degrade] = useState(false)
@@ -43,7 +42,6 @@ w          <Env perfSucks={perfSucks} />
 
           <ScrollControls damping={.2} pages={2} html style={{ width: '100%'}}>
             <Scroll>
-            <Bubble   isOpen={isOpen} where={false} />
 
             </Scroll>
             <Scroll html style={{ width: '100%',}}>

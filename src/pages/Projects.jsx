@@ -30,14 +30,14 @@ function Item({ url, scale, id, ...props }) {
 
   function Items() {
     const { width: w, height: h } = useThree((state) => state.viewport)
-
+    const scale= [w / 2 * 1.2, w / 4 * 1.2, 1];
     return (
       <Scroll>
-        <Item id="1" url="../images/1.png" scale={[w / 2, w / 4, 1]} position={[-w / 6, 0, 0]} />
-        <Item id="2" url="../images/2.png" scale={[w / 2, w / 4, 1]} position={[w / 30, -h, 0]} />
-        <Item id="3" url="../images/3.png" scale={[w / 2, w / 4, 1]} position={[w / 10, -h * 1.75, 0]} />
-        <Item id="4" url="../images/4.png" scale={[w / 3, w / 5, 1]} position={[-w / 4, -h * 2.6, 0]} />
-        <Item id="5" url="../images/5.png" scale={[w / 2, w / 4, 1]} position={[-w / 6, -h * 3.8, 0]} />
+        <Item id="1" url="../images/1.png" scale={scale} position={[-w / 6, 0, 0]} />
+        <Item id="2" url="../images/2.png" scale={scale} position={[w / 30, -h, 0]} />
+        <Item id="3" url="../images/3.png" scale={scale} position={[w / 10, -h * 1.75, 0]} />
+        <Item id="4" url="../images/4.png" scale={scale}position={[-w / 4, -h * 2.6, 0]} />
+        <Item id="5" url="../images/5.png" scale={scale} position={[-w / 6, -h * 3.8, 0]} />
       </Scroll>
     )
   }

@@ -11,7 +11,7 @@ const variants = {
   closed: { scale: 0, transition: { duration: .3} },
 }
 
-const Bubble = ({ isOpen, where=true }) => {
+const Bubble = ({ isOpen }) => {
   const mesh = useRef();
   const hover = useRef(false);
   const uniforms = useMemo(() => ({
@@ -24,7 +24,7 @@ const Bubble = ({ isOpen, where=true }) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 800) {
-        setScale(where ? 0.3 : .1);
+        setScale(0.3);
       } else {
         setScale(0.6);
       }
@@ -58,14 +58,14 @@ const Bubble = ({ isOpen, where=true }) => {
 
   return (
     <group scale={scale}>
-      <motion.group whileTap={{ rotateY: where ? 3 : 0, scale: .8 }}>
+      <motion.group whileTap={{ rotateY: 3, scale: .8 }}>
         <motion.group animate={isOpen ? "open" : "closed"} variants={variants}>
           <motion.mesh
-            variants={where ? moveAnimation : null}
+            variants={moveAnimation}
             animate="show"
             initial="hidden"
             ref={mesh}
-            position={[where ? 0 : 3, 0, 0]}
+            position={[0, 0, 0]}
             onPointerOver={() => (hover.current = true)}
             onPointerOut={() => (hover.current = false)}
           >
