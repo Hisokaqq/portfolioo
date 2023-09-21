@@ -5,6 +5,10 @@ import { Html, PerformanceMonitor, Scroll, ScrollControls } from '@react-three/d
 import { useNavigate } from 'react-router-dom'
 import { useAnimation, motion } from 'framer-motion'
 import GBackBtn from '../components/GBackBtn'
+import Magnetic from '../components/Magnetic'
+import Me from '../components/Me'
+import Contact from '../components/Contact'
+import Bubble from '../components/Buble'
 
 const Me_contact = () => {
     const [perfSucks, degrade] = useState(false)
@@ -20,6 +24,8 @@ const Me_contact = () => {
         navigate("/");
       }, 300); 
       }
+    const [isOpen, setIsOpen] = useState(true)
+    
   return (
     <div className="h-full w-full">
         <Canvas
@@ -33,16 +39,22 @@ const Me_contact = () => {
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
 w          <Env perfSucks={perfSucks} />
           </group>
-          <Html fullscreen  style={{ position: "fixed", left:0, top:0, transform: "translate(-50%, -50%)" }}>
-          <motion.div animate={control2} style={{ width: '100%' }}> 
+          
+
+          <ScrollControls damping={.2} pages={2} html style={{ width: '100%'}}>
+            <Scroll>
+            <Bubble   isOpen={isOpen} where={false} />
+
+            </Scroll>
+            <Scroll html style={{ width: '100%',}}>
+            <motion.div animate={control2} style={{ width: '100%' }}> 
             <GBackBtn goBack={goBack} />
           </motion.div>
-
-
-          </Html>
-
-          <ScrollControls damping={.2} pages={5} html style={{ width: '50%', left: "50%"}}>
-            <Scroll html style={{ width: '50%',}}></Scroll>
+          <motion.div className="h-[300vh]"> 
+            <Me />
+            <Contact />
+          </motion.div>
+            </Scroll>
           </ScrollControls>
         </Canvas>
     </div>

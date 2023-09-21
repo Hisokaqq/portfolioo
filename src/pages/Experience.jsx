@@ -29,7 +29,7 @@ w          <Env perfSucks={perfSucks} />
           <Html fullscreen  style={{ position: "absolute", left:0, top:0, transform: "translate(-50%, -50%)" }}>
             <HtmlPart  isOpen={isOpen} setIsOpen={setIsOpen} goinTo={goinTo}/>
           </Html>
-          <Buble  isOpen={isOpen} setIsOpen={setIsOpen} />
+          <Buble  isOpen={isOpen}  />
           
         </Canvas>
         
