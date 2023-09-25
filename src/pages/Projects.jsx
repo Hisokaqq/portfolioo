@@ -58,14 +58,12 @@ const Projects = () => {
   return (
     <div className="h-screen w-screen">
     <Canvas   eventPrefix="client" camera={{ zoom: 1,  fov: 60  }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
-
     <color attach="background" args={['#f0f0f0']} />
     <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
 w       <Env perfSucks={perfSucks} />
     </group>
     <motion3d.group animate={control}>
     <motion3d.group initial={{y: -20}} animate={{y: 0, transition:{duration:1}}}>
-
     <ScrollControls damping={.2} pages={5}>
       <Items />
       <Scroll html style={{ width: '100%' }}>
@@ -89,11 +87,8 @@ w       <Env perfSucks={perfSucks} />
     </ScrollControls>
     </motion3d.group>
     </motion3d.group>
-
   </Canvas>
-   
   </div>
-
   )
 }
 

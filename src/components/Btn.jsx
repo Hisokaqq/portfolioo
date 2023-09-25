@@ -2,7 +2,6 @@ import React from 'react'
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import Magnetic from './Magnetic';
-
 export default function Btn({children, backgroundColor="bg-red-400", ...attributes}) {
 
   const circle = useRef(null);

@@ -1,15 +1,10 @@
-const delay1 = .3;
-const delay2 = 4
-const delay3 = 2
-
-
+const delay = 2
 
 export const moveAnimation = {
     hidden: {
         scale: .2,
         x: 30,
         rotateY: 2,
-        
     },
     show: {
         x: 0,
@@ -19,11 +14,10 @@ export const moveAnimation = {
             duration: 2,
             ease: "easeOut",
             when: "beforeChildren",
-            rotateY: { delay: delay3, duration: .5 },
-            scale: { delay: delay3 + .5 },
+            rotateY: { delay: delay, duration: .5 },
+            scale: { delay: delay + .5 },
         },
     },
-    
 };
 
 const htmlDelay = 2
@@ -54,7 +48,6 @@ export const parentAnimation = {
       } }
   };
   
-
   export const simpleAnimation = {
     hidden: { opacity: 0 },
     show: { opacity: 1,
@@ -65,3 +58,41 @@ export const parentAnimation = {
     },
   
   }
+
+export const SkilContAnimation = {
+  hidden:{
+    opacity: 0,
+  },
+  show:{
+    opacity: 1,
+    transition: {
+      staggerChildren: .05,
+      when: "beforeChildren",
+      delayChildren: .1,
+    }
+  }
+}
+
+export const SkilAnimation = {
+  hidden: { scaleX: 0 },
+  show: { scaleX: 1,
+    transition: { duration: .3 }
+  }
+};
+
+export const SkilNameAnimation = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1,
+    transition: { duration: .3 }
+  }
+};
+
+export const AboutMeAnimation = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1,
+    transition: { 
+      duration: .7,
+      delay: .5
+     }
+  }
+};

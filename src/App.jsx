@@ -11,7 +11,6 @@ function App() {
   const location = useLocation();
   return (
     <div className="app h-[100vh] w-[100%]">
-      
       <AnimatePresence mode={ "wait"}>
 
       <Routes location={ location} key={location.pathname}>

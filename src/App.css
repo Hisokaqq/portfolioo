@@ -178,8 +178,8 @@ body{
     align-items: center;
     justify-content: center;
     background-color: #fecdd3;
-    width: 10rem;
-    height: 10rem;
+    width: 8rem;
+    height: 8rem;
 }
 
 .roundedButton p {
@@ -192,8 +192,8 @@ body{
 
 @media (max-width: 768px) {
   .roundedButton {
-      width: 6rem; /* Adjust the width as needed for smaller screens */
-      height: 6rem; /* Adjust the height as needed for smaller screens */
+      width: 5.5rem; /* Adjust the width as needed for smaller screens */
+      height: 5.5rem; /* Adjust the height as needed for smaller screens */
       font-size: 14px; /* You can also adjust the font size for smaller screens */
       margin-top: 2rem;
   }
@@ -210,3 +210,5 @@ body{
     border-radius: 50%;
     top: 100%;
 }
+
+

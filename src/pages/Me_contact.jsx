@@ -5,13 +5,11 @@ import {  PerformanceMonitor, Scroll, ScrollControls } from '@react-three/drei'
 import { useNavigate } from 'react-router-dom'
 import { useAnimation, motion } from 'framer-motion'
 import GBackBtn from '../components/GBackBtn'
-import Magnetic from '../components/Magnetic'
 import Me from '../components/Me'
 import Contact from '../components/Contact'
 
 const Me_contact = () => {
     const [perfSucks, degrade] = useState(false)
-
     const navigate = useNavigate()
     const control = useAnimation()
     const control2 = useAnimation()
@@ -23,10 +21,9 @@ const Me_contact = () => {
         navigate("/");
       }, 300); 
       }
-    const [isOpen, setIsOpen] = useState(true)
     
   return (
-    <div className="h-full w-full">
+    <motion.div animate={control2} className="h-full w-full">
         <Canvas
           shadows
           dpr={[1, perfSucks ? 1.5 : 10]}
@@ -38,14 +35,11 @@ const Me_contact = () => {
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
 w          <Env perfSucks={perfSucks} />
           </group>
-          
-
           <ScrollControls damping={.2} pages={2} html style={{ width: '100%'}}>
             <Scroll>
-
             </Scroll>
             <Scroll html style={{ width: '100%',}}>
-            <motion.div animate={control2} style={{ width: '100%' }}> 
+            <motion.div  style={{ width: '100%' }}> 
             <GBackBtn goBack={goBack} />
           </motion.div>
           <motion.div className="h-[300vh]"> 
@@ -55,7 +49,7 @@ w          <Env perfSucks={perfSucks} />
             </Scroll>
           </ScrollControls>
         </Canvas>
-    </div>
+    </motion.div>
   )
 }
 

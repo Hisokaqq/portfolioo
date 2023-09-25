@@ -30,13 +30,10 @@ const Bubble = ({ isOpen }) => {
       }
     };
 
-    // Initial scale setup
     handleResize();
 
-    // Add event listener
     window.addEventListener('resize', handleResize);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -47,7 +44,6 @@ const Bubble = ({ isOpen }) => {
     if (mesh.current) {
       mesh.current.material.uniforms.u_time.value =
         0.4 * clock.getElapsedTime();
-
       mesh.current.material.uniforms.u_intensity.value = MathUtils.lerp(
         mesh.current.material.uniforms.u_intensity.value,
         hover.current ? 1 : 0.15,

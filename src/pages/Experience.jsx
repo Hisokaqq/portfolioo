@@ -13,6 +13,7 @@ const Experience = () => {
     const goinTo = (to) => {
       navigate(to)
     }
+
   return (
     <div className="h-full w-full">
         <Canvas
@@ -30,9 +31,7 @@ w          <Env perfSucks={perfSucks} />
             <HtmlPart  isOpen={isOpen} setIsOpen={setIsOpen} goinTo={goinTo}/>
           </Html>
           <Buble  isOpen={isOpen}  />
-          
         </Canvas>
-        
       </div>
   )
 }

@@ -6,14 +6,12 @@ import { useRef } from "react"
 function Env({ perfSucks }) {
     const ref = useRef()
     useFrame((state, delta) => {
-      // Animate the environment as well as the camera
       if (!perfSucks) {
         easing.damp3(ref.current.rotation, [Math.PI / 2, 0, state.clock.elapsedTime / 5 + state.pointer.x], 0.2, delta)
         easing.damp3(state.camera.position, [Math.sin(state.pointer.x / 4) * 9, 1.25 + state.pointer.y, Math.cos(state.pointer.x / 4) * 9], 0.5, delta)
         state.camera.lookAt(0, 0, 0)
       }
     })
-    // Runtime environments can be too slow on some systems, better safe than sorry with PerfMon
     return (
       <Environment frames={perfSucks ? 1 : Infinity} preset="city" resolution={256} background blur={0.8}>
         <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
