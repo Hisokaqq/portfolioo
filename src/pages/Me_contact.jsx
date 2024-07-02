@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import Env from '../components/Env'
 import { Canvas } from '@react-three/fiber'
-import {  PerformanceMonitor, Scroll, ScrollControls } from '@react-three/drei'
+import {  Float, PerformanceMonitor, PresentationControls, Scroll, ScrollControls } from '@react-three/drei'
 import { useNavigate } from 'react-router-dom'
 import { useAnimation, motion } from 'framer-motion'
 import GBackBtn from '../components/GBackBtn'
 import Me from '../components/Me'
 import Contact from '../components/Contact'
+import { Model } from '../3dmodels/Phone'
+
+
 
 const Me_contact = () => {
     const [perfSucks, degrade] = useState(false)
@@ -30,12 +33,22 @@ const Me_contact = () => {
           eventPrefix="client"
           camera={{ position: [20, 0.9, 20], fov: 26 }}
         >
+        <Float position={[3, 1, 0]}>
+          <PresentationControls
+          config={{ mass: 2, tension: 500 }}
+          snap={{ mass: 4, tension: 1500 }}
+          rotation={[0, 0.3, 0]}
+          polar={[-Math.PI / 3, Math.PI / 3]}
+          azimuth={[-Math.PI / 1.4, Math.PI / 2]}>
+          <Model />
+          </PresentationControls>
+        </Float>
         <PerformanceMonitor onDecline={() => degrade(true)} />
         <color attach="background" args={['#f0f0f0']} />
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
 w          <Env perfSucks={perfSucks} />
           </group>
-          <ScrollControls damping={.2} pages={2} html style={{ width: '100%'}}>
+          <ScrollControls  damping={.1} pages={1.3} html style={{ width: '100%'}}>
             <Scroll>
             </Scroll>
             <Scroll html style={{ width: '100%',}}>

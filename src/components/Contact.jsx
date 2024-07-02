@@ -35,7 +35,7 @@ const Contact = () => {
   }, []);
 
   return (
-    <motion.div className="h-[100vh] w-full flex items-center justify-center relative">
+    <motion.div className="h-[30vh] w-full flex items-center justify-center relative">
       <div className="md:w-[70%] w-[90%] ">
         <motion.h1 className="lg:text-4xl text-xsm">Let's work together</motion.h1>
         <div className="relative">

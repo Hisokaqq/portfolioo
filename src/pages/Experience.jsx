@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Env from '../components/Env'
 import HtmlPart from '../components/HtmlPart'
 import { useNavigate } from 'react-router-dom'
-import Buble from '../components/Buble'
+import Buble from '../3dmodels/Buble'
 
 const Experience = () => {
     const [perfSucks, degrade] = useState(false)
