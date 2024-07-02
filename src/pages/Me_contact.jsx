@@ -8,7 +8,8 @@ import GBackBtn from '../components/GBackBtn'
 import Me from '../components/Me'
 import Contact from '../components/Contact'
 import { Model } from '../3dmodels/Phone'
-
+import {motion as motion3d} from 'framer-motion-3d'
+import { moveAnimationPhone } from '../helpers/AnimationVar'
 
 
 const Me_contact = () => {
@@ -33,16 +34,22 @@ const Me_contact = () => {
           eventPrefix="client"
           camera={{ position: [20, 0.9, 20], fov: 26 }}
         >
-        <Float position={[3, 1, 0]}>
+        <motion3d.group  position={[3, 1, 0]} 
+        variants={moveAnimationPhone}
+        animate="show"
+        initial="hidden">
+        <Float rotationIntensity={3} floatingRange={[-.05, .05]} speed={1.1}>
           <PresentationControls
-          config={{ mass: 2, tension: 500 }}
+          config={{ mass: 4, tension: 500 }}
           snap={{ mass: 4, tension: 1500 }}
+          speed={5}
           rotation={[0, 0.3, 0]}
           polar={[-Math.PI / 3, Math.PI / 3]}
           azimuth={[-Math.PI / 1.4, Math.PI / 2]}>
           <Model />
           </PresentationControls>
         </Float>
+        </motion3d.group>
         <PerformanceMonitor onDecline={() => degrade(true)} />
         <color attach="background" args={['#f0f0f0']} />
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>

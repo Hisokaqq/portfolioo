@@ -1,32 +1,63 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Text, useGLTF } from '@react-three/drei'
 import { motion } from 'framer-motion-3d'
 import { RoundedBox } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 
 export function Model(props) {
   const { nodes, materials } = useGLTF('/phone.glb')
-  
+  const ScrollerMesh = useRef()
+  const rotationAxis = new THREE.Vector3(0, 1, 0) 
+
+  useFrame(() => {
+    ScrollerMesh.current.rotateOnAxis(rotationAxis, 0.03)
+  })
+  const [scale, setScale] = useState(0.22);
+  const [pos, setPos] = useState([0, 0, 0]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 950) {
+        setScale(0.13);
+        setPos([-2.5, .5, 0]);
+
+      } else {
+        setScale(0.22);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <motion.group 
       whileTap={{
-        scale: 0.22,
+        scale: scale * 1.1,
         transition: {
           type: "spring",
           stiffness: 200,
           damping: 5
         }
       }} 
-      scale={.2} 
-      rotation={[.2, -Math.PI / 1.3, 0]} 
+      scale={scale} 
+      rotation={[scale, -Math.PI / 1.3, 0]} 
       {...props} 
       dispose={null}
+      position= {pos}
     >
       <mesh 
         geometry={nodes.Phone_base.geometry} 
         material={materials.Base} 
         scale={0.672}
       >
-        <group 
+        <group ref={ScrollerMesh}
           position={[0.428, 0.941, 0]} 
           rotation={[-0.002, 0.004, -0.759]} 
           scale={0.636}
@@ -88,9 +119,8 @@ export function Model(props) {
           fontWeight={300}
           letterSpacing={0.05}
         >
-          Fool! _)
+          Call me
         </Text>
-        
       </RoundedBox>
     </motion.group>
   )

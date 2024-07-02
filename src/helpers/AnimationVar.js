@@ -19,6 +19,25 @@ export const moveAnimation = {
         },
     },
 };
+export const moveAnimationPhone = {
+    hidden: {
+        scale: .5,
+        x: 20,
+        rotateY: 2,
+    },
+    show: {
+        rotateY: 0,
+        x: 3,
+        scale: 1,
+        transition: {
+            duration: 2,
+            ease: "easeOut",
+            when: "beforeChildren",
+            rotateY: { delay: delay, duration: .5 },
+            scale: { delay: delay + .5 },
+        },
+    },
+};
 
 const htmlDelay = 2
 
