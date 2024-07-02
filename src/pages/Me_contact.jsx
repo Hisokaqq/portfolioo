@@ -55,14 +55,12 @@ const Me_contact = () => {
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
 w          <Env perfSucks={perfSucks} />
           </group>
-          <ScrollControls  damping={.1} pages={1.3} html style={{ width: '100%'}}>
-            <Scroll>
-            </Scroll>
+          <ScrollControls  damping={.4} pages={1.3} html style={{ width: '100%'}}>
             <Scroll html style={{ width: '100%',}}>
             <motion.div  style={{ width: '100%' }}> 
             <GBackBtn goBack={goBack} />
           </motion.div>
-          <motion.div className="h-[300vh]"> 
+          <motion.div className="h-[100vh]"> 
             <Me />
             <Contact />
           </motion.div>

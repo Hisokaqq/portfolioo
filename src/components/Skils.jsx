@@ -7,18 +7,18 @@ const Skills = {
   Html: "100%",
   React: "90%",
   Django: "90%",
-  "Framer Motion + Gsap": "80%",
-  "Three Fiber": "70%",
-  Next: "60%",
-  FastApi: "40%",
+  Next: "90%",
+  "Framer Motion + Gsap": "100%",
+  "Three Fiber": "80%",
+  FastApi: "70%",
   Blender: "40%"
 };
 
 const Languages = {
-  English: "80%",
-  German: "80%",
-  Russian: "100%",
-  Ukrainian: "100%"
+  English: "95%",
+  German: "90%",
+  Ukrainian: "100%",
+  Russian: "100%"
 };
 
 const Skils = () => {
@@ -37,7 +37,7 @@ const Skils = () => {
             </motion.div>
           </div>
         ))}
-        <motion.div variants={SkilAnimation} className='w-full h-1 bg-red-400 rounded-md my-10'></motion.div>
+        <motion.div variants={SkilAnimation} className='w-full h-1 bg-white rounded-md my-10'></motion.div>
         {Object.entries(Languages).map(([language, percent]) => (
           <div key={language} className="mb-4">
             <Magnetic>
