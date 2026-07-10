@@ -8,16 +8,21 @@ const variants = {
 const HtmlPart = ({isOpen, setIsOpen, navigateTo}) => {
     const nav_anim = (to) => {
         setIsOpen(false);
+        // Let the bubble collapse / overlay fade (~0.3s) register, then route;
+        // AnimatePresence handles the cross-page fade from there.
         setTimeout(() => {
           navigateTo(to);
-        }, 1300);
+        }, 600);
       };
       
   return (
     <div className="w-[100%] h-[100dvh] z-50 fixed top-0 left-0 overflow-hidden" >
+    {/* Real heading for screen readers / SEO; the visible name below is split
+        into decorative per-letter elements and hidden from the a11y tree. */}
+    <h1 className="sr-only">Alex Burtyn — software developer</h1>
     <motion.div   animate={isOpen ? "open"  : "closed"}
     variants={variants}>
-        <motion.div variants={parentAnimation} initial="hidden" animate="show" exit="exit" className="  p-2 sm:p-6 md:p-8 absolute flex flex-col gap-2 sm:gap-4 md:gap-6 lg:gap-8 xl:w-[25rem] md:w-[20rem] sm:w-[15rem] w-[8rem] 2xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-xl">
+        <motion.div aria-hidden="true" variants={parentAnimation} initial="hidden" animate="show" exit="exit" className="  p-2 sm:p-6 md:p-8 absolute flex flex-col gap-2 sm:gap-4 md:gap-6 lg:gap-8 xl:w-[25rem] md:w-[20rem] sm:w-[15rem] w-[8rem] 2xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-xl">
             <div  className="flex w-full justify-between">
             <div className="overflow-hidden"><motion.h1 variants={firstnameAnimation}   className="title " >A</motion.h1></div>
             <div className="overflow-hidden"><motion.h1 variants={firstnameAnimation}   className="title " >L</motion.h1></div>
@@ -39,7 +44,7 @@ const HtmlPart = ({isOpen, setIsOpen, navigateTo}) => {
                 <div className="line w-full h-[2px]  bg-[#3e3e3d]" />
             </div>
         </motion.div>
-        <motion.div variants={parentAnimation} initial="hidden" animate="show" className=" p-2 sm:p-6 md:p-8 absolute right-0 bottom-0  flex flex-col gap-2 sm:gap-4 md:gap-6 lg:gap-8 2xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-xl">
+        <motion.div aria-hidden="true" variants={parentAnimation} initial="hidden" animate="show" className=" p-2 sm:p-6 md:p-8 absolute right-0 bottom-0  flex flex-col gap-2 sm:gap-4 md:gap-6 lg:gap-8 2xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-xl">
             <div className="flex w-full">
                <div className="overflow-hidden"> <motion.h1 variants={firstnameAnimation}  className="title " >B</motion.h1></div>
                <div className="overflow-hidden"> <motion.h1 variants={firstnameAnimation}  className="title " >U</motion.h1></div>

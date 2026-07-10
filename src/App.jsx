@@ -11,7 +11,7 @@ import NotFound from './pages/NotFound'
 function App() {
   const location = useLocation();
   return (
-    <div className="app h-[100dvh] w-[100%]">
+    <main className="app h-[100dvh] w-[100%]">
       <AnimatePresence mode={ "wait"}>
 
       <Routes location={ location} key={location.pathname}>
@@ -37,7 +37,7 @@ function App() {
           />
       </Routes>
       </AnimatePresence>
-    </div>
+    </main>
   )
 }
 export default App

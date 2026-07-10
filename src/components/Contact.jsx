@@ -25,10 +25,15 @@ const Contact = () => {
 
   const isMobile = useIsMobile(768);
 
+  const email = 'burtynoleksandr@gmail.com';
+  const handleGetInTouch = () => {
+    window.location.href = `mailto:${email}`;
+  };
+
   return (
     <motion.div className="h-[30vh] w-full flex items-center justify-center relative">
       <div className="md:w-[70%] w-[90%] ">
-        <motion.h1 className="lg:text-4xl text-xsm">Let's work together</motion.h1>
+        <motion.h1 className="lg:text-4xl text-sm">Let's work together</motion.h1>
         <div className="relative">
           <div className="relative overflow-hidden">
             <motion.div
@@ -43,7 +48,13 @@ const Contact = () => {
             transition={{ duration: 0.4 }}
           >
             <motion.div className="w-32 h-32 absolute right-0 top-[-50%] translate-y-[-60%] ">
-              <Btn>
+              <Btn
+                onClick={handleGetInTouch}
+                role="button"
+                tabIndex={0}
+                aria-label="Send me an email"
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleGetInTouch(); } }}
+              >
                 <p>Get in touch</p>
               </Btn>
             </motion.div>
@@ -56,18 +67,19 @@ const Contact = () => {
               tabIndex={0}
               aria-label="Copy phone number"
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.click(); } }}
-              className={`cursor-pointer text-sm relative w-fit flex gap-1`}
+              className={`cursor-pointer text-sm relative w-fit flex gap-1 hover:text-gray-500 transition-colors duration-200`}
             >
-              <p className='hover:text-gray-500 transition-all duration-200'>+43 660 7890132</p>
+              <p>+43 660 7890132</p>
               <AiOutlineCopy className="mt-[3px]"/>
               <AnimatePresence>
               {copiedPhoneNumber && (
-                <motion.div
-                  className={`w-full h-[2px] bg-red-400 absolute bottom-0 left-0`}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
+                <motion.span
+                  key="copied-phone"
+                  className="text-xs text-red-400 ml-1 mt-[2px]"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                ></motion.div>
+                >Copied!</motion.span>
               )}
               </AnimatePresence>
             </div>
@@ -79,18 +91,19 @@ const Contact = () => {
               tabIndex={0}
               aria-label="Copy email address"
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.click(); } }}
-              className={` cursor-pointer text-sm relative w-fit flex gap-1`}
+              className={` cursor-pointer text-sm relative w-fit flex gap-1 hover:text-gray-500 transition-colors duration-200`}
             >
-              <p className='hover:text-gray-500 transition-all duration-200'>burtynoleksandr@gmail.com</p>
+              <p>burtynoleksandr@gmail.com</p>
             <AiOutlineCopy className="mt-[3px]"/>
               <AnimatePresence>
               {copiedEmailAddress && (
-                <motion.div
-                  className={`w-full h-[2px]  bg-red-400 absolute bottom-0 left-0`}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
+                <motion.span
+                  key="copied-email"
+                  className="text-xs text-red-400 ml-1 mt-[2px]"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                ></motion.div>
+                >Copied!</motion.span>
               )}
               </AnimatePresence>
             </div>

@@ -54,11 +54,19 @@ export const parentAnimation = {
     exit: {
       opacity: 0,
       transition: {
-        duration: 100,
+        duration: 0.4,
       }
     }
   };
-  
+
+// Shared page-transition variant used by every route so `AnimatePresence`
+// (in App.jsx, mode="wait") animates every navigation consistently.
+export const pageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } },
+  exit: { opacity: 0, transition: { duration: 0.35, ease: 'easeIn' } },
+};
+
   export const firstnameAnimation = {
     hidden: { y: 300 },
     show: { y: 0,

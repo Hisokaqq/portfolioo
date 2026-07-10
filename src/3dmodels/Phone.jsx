@@ -102,7 +102,7 @@ export function Model(props) {
           fontWeight={300}
           letterSpacing={0.05}
         >
-          Call me
+          spin me
         </Text>
       </RoundedBox>
     </motion.group>

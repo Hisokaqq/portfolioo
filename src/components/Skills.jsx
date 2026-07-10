@@ -36,7 +36,7 @@ const Skills = () => {
             </motion.div>
           </div>
         ))}
-        <motion.div variants={SkilAnimation} className='w-full h-1 bg-white rounded-md my-10'></motion.div>
+        <motion.div variants={SkilAnimation} className='w-full h-px bg-gray-300 rounded-md my-10'></motion.div>
         {Object.entries(Languages).map(([language, percent]) => (
           <div key={language} className="mb-4">
             <Magnetic>

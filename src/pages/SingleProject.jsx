@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import {VscGithubAlt} from 'react-icons/vsc'
 import {SiVercel} from 'react-icons/si'
 import projects from '../components/projects'
+import { pageVariants } from '../helpers/AnimationVar'
 
 const SingleProject = () => {
     const {id} = useParams()
@@ -23,7 +24,7 @@ const SingleProject = () => {
     }
 
     return (
-        <motion.div animate={{opacity: 1, transition:{duration:1.3}}} initial={{opacity:0}} exit={{opacity:0}}  className='example-cont bg-black'>
+        <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className='example-cont bg-black'>
             <div className="fixed top-0 left-0 z-50">
                 <button type="button" onClick={goBack} className="font-bold p-3 text-lg text-white hover:text-gray-400 duration-300 cursor-pointer bg-transparent border-0">Go Back</button>
             </div>

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useIntersect, Image, ScrollControls, Scroll } from '@react-three/drei'
 import { motion as motion3d} from 'framer-motion-3d'
@@ -7,7 +7,8 @@ import { motion } from 'framer-motion'
 import {  useNavigate } from 'react-router-dom'
 import Env from '../components/Env'
 import GBackBtn from '../components/GBackBtn'
-import useAnimatedNavigate from '../helpers/useAnimatedNavigate'
+import ScrollHint from '../components/ScrollHint'
+import { pageVariants } from '../helpers/AnimationVar'
 
 function Item({ url, scale, id, ...props }) {
     const visible = useRef(false)
@@ -15,10 +16,14 @@ function Item({ url, scale, id, ...props }) {
     const ref = useIntersect((isVisible) => (visible.current = isVisible))
     const { height } = useThree((state) => state.viewport)
     const navigate = useNavigate()
+    // Reset the cursor if we unmount while still hovering (e.g. on navigate).
+    useEffect(() => () => { document.body.style.cursor = 'auto' }, [])
     useFrame((state, delta) => {
       ref.current.position.y = THREE.MathUtils.damp(ref.current.position.y, visible.current ? 0 : -height / 2 + 1, 4, delta)
-      ref.current.material.zoom = THREE.MathUtils.damp(ref.current.material.zoom, visible.current ? 1 : 1.5, 4, delta)
-      ref.current.material.grayscale = THREE.MathUtils.damp(ref.current.material.grayscale, hovered ? 1 : 0, 4, delta)
+      // Subtle zoom-in on hover reads as "clickable" (the old grayscale-on-hover
+      // looked like the image was being disabled).
+      ref.current.material.zoom = THREE.MathUtils.damp(ref.current.material.zoom, visible.current ? (hovered ? 1.08 : 1) : 1.5, 4, delta)
+      ref.current.material.grayscale = THREE.MathUtils.damp(ref.current.material.grayscale, 0, 4, delta)
     })
     return (
       <group {...props} >
@@ -43,26 +48,23 @@ function Item({ url, scale, id, ...props }) {
   }
 
 const Projects = () => {
-  const { control, control2, animateTo } = useAnimatedNavigate()
+  const navigate = useNavigate()
   const [perfSucks] = useState(false)
 
-  const goBack = () => animateTo("/")
+  const goBack = () => navigate("/")
   return (
-    <div className="h-screen w-screen">
+    <motion.div className="h-screen w-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
     <Canvas   eventPrefix="client" camera={{ zoom: 1,  fov: 60  }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
     <color attach="background" args={['#f0f0f0']} />
+    <Suspense fallback={null}>
     <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
         <Env perfSucks={perfSucks} />
     </group>
-    <motion3d.group animate={control}>
     <motion3d.group initial={{y: -20}} animate={{y: 0, transition:{duration:1}}}>
     <ScrollControls damping={.2} pages={5}>
       <Items />
       <Scroll html style={{ width: '100%' }}>
-      <motion.div animate={control2}>
-    <GBackBtn goBack={goBack} />
-  </motion.div>
-      <motion.div animate={control2}>
+      <GBackBtn goBack={goBack} />
       <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition:{duration:1, delay: .5}}}>
         <h1 className="h1" style={{ position: 'absolute', top: '180vh', left: '10vw' }}>creating</h1>
         <h1 className="h1" style={{ position: 'absolute', top: `100vh`, right: '20vw', transform: `translate3d(0,-100%,0)` }}>awesome</h1>
@@ -74,13 +76,13 @@ const Projects = () => {
         passion.
         </h1>
       </motion.div>
-      </motion.div>
+      <ScrollHint />
       </Scroll>
     </ScrollControls>
     </motion3d.group>
-    </motion3d.group>
+    </Suspense>
   </Canvas>
-  </div>
+  </motion.div>
   )
 }
 

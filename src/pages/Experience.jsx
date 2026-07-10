@@ -1,10 +1,12 @@
 import { Html, PerformanceMonitor } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
+import { motion } from 'framer-motion'
 import Env from '../components/Env'
 import HtmlPart from '../components/HtmlPart'
 import { useNavigate } from 'react-router-dom'
 import Bubble from '../3dmodels/Bubble'
+import { pageVariants } from '../helpers/AnimationVar'
 
 const Experience = () => {
     const [perfSucks, degrade] = useState(false)
@@ -15,7 +17,7 @@ const Experience = () => {
     }
 
   return (
-    <div className="h-full w-full">
+    <motion.div className="h-full w-full" variants={pageVariants} initial="initial" animate="animate" exit="exit">
         <Canvas
           shadows
           dpr={[1, perfSucks ? 1 : 2]}
@@ -24,15 +26,17 @@ const Experience = () => {
         >
           <PerformanceMonitor onDecline={() => degrade(true)} />
           <color attach="background" args={['#f0f0f0']} />
+          <Suspense fallback={null}>
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
             <Env perfSucks={perfSucks} />
           </group>
+          </Suspense>
           <Html fullscreen  style={{ position: "absolute", left:0, top:0, transform: "translate(-50%, -50%)" }}>
             <HtmlPart  isOpen={isOpen} setIsOpen={setIsOpen} navigateTo={navigateTo}/>
           </Html>
           <Bubble  isOpen={isOpen}  />
         </Canvas>
-      </div>
+      </motion.div>
   )
 }
 

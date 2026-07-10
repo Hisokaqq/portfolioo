@@ -1,14 +1,23 @@
 import { Environment, Lightformer } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { easing } from "maath"
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 
 function Env({ perfSucks }) {
     const ref = useRef()
+    // Touch devices have no mouse pointer, so the pointer-driven camera would
+    // sit perfectly still. Fall back to a gentle time-based drift there.
+    const isCoarse = useMemo(
+      () => typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches,
+      []
+    )
     useFrame((state, delta) => {
       if (!perfSucks) {
-        easing.damp3(ref.current.rotation, [Math.PI / 2, 0, state.clock.elapsedTime / 5 + state.pointer.x], 0.2, delta)
-        easing.damp3(state.camera.position, [Math.sin(state.pointer.x / 4) * 9, 1.25 + state.pointer.y, Math.cos(state.pointer.x / 4) * 9], 0.5, delta)
+        const t = state.clock.elapsedTime
+        const px = isCoarse ? Math.sin(t * 0.15) * 1.2 : state.pointer.x
+        const py = isCoarse ? Math.cos(t * 0.12) * 0.4 : state.pointer.y
+        easing.damp3(ref.current.rotation, [Math.PI / 2, 0, t / 5 + px], 0.2, delta)
+        easing.damp3(state.camera.position, [Math.sin(px / 4) * 9, 1.25 + py, Math.cos(px / 4) * 9], 0.5, delta)
         state.camera.lookAt(0, 0, 0)
       }
     })
