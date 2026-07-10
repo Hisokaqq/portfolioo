@@ -9,6 +9,7 @@ import Env from '../components/Env'
 import GBackBtn from '../components/GBackBtn'
 import ScrollHint from '../components/ScrollHint'
 import { pageVariants } from '../helpers/AnimationVar'
+import { useTheme } from '../helpers/ThemeContext'
 
 function Item({ url, scale, id, ...props }) {
     const visible = useRef(false)
@@ -50,15 +51,16 @@ function Item({ url, scale, id, ...props }) {
 const Projects = () => {
   const navigate = useNavigate()
   const [perfSucks] = useState(false)
+  const { theme } = useTheme()
 
   const goBack = () => navigate("/")
   return (
     <motion.div className="h-screen w-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
     <Canvas   eventPrefix="client" camera={{ zoom: 1,  fov: 60  }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
-    <color attach="background" args={['#f0f0f0']} />
+    <color attach="background" args={[theme === 'dark' ? '#161226' : '#f0f0f0']} />
     <Suspense fallback={null}>
     <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
-        <Env perfSucks={perfSucks} />
+        <Env perfSucks={perfSucks} theme={theme} />
     </group>
     <motion3d.group initial={{y: -20}} animate={{y: 0, transition:{duration:1}}}>
     <ScrollControls damping={.2} pages={5}>

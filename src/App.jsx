@@ -8,12 +8,16 @@ import Me_contact from './pages/Me_contact'
 import SingleProject from './pages/SingleProject'
 import NotFound from './pages/NotFound'
 import CustomCursor from './components/CustomCursor'
+import ThemeToggle from './components/ThemeToggle'
+import { ThemeProvider } from './helpers/ThemeContext'
 
 function App() {
   const location = useLocation();
   return (
+    <ThemeProvider>
     <main className="app h-[100dvh] w-[100%]">
       <CustomCursor />
+      <ThemeToggle />
       <AnimatePresence mode={ "wait"}>
 
       <Routes location={ location} key={location.pathname}>
@@ -40,6 +44,7 @@ function App() {
       </Routes>
       </AnimatePresence>
     </main>
+    </ThemeProvider>
   )
 }
 export default App

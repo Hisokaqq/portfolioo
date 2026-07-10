@@ -11,10 +11,12 @@ import ScrollHint from '../components/ScrollHint'
 import { Model } from '../3dmodels/Phone'
 import {motion as motion3d} from 'framer-motion-3d'
 import { moveAnimationPhone, pageVariants } from '../helpers/AnimationVar'
+import { useTheme } from '../helpers/ThemeContext'
 
 
 const Me_contact = () => {
     const [perfSucks, degrade] = useState(false)
+    const { theme } = useTheme()
     const navigate = useNavigate()
 
     const goBack = () => navigate("/")
@@ -47,10 +49,10 @@ const Me_contact = () => {
         </motion3d.group>
         </Suspense>
         <PerformanceMonitor onDecline={() => degrade(true)} />
-        <color attach="background" args={['#f0f0f0']} />
+        <color attach="background" args={[theme === 'dark' ? '#161226' : '#f0f0f0']} />
           <Suspense fallback={null}>
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
-            <Env perfSucks={perfSucks} />
+            <Env perfSucks={perfSucks} theme={theme} />
           </group>
           </Suspense>
           <ScrollControls  damping={.05} pages={1.3} html style={{ width: '100%'}}>

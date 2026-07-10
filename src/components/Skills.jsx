@@ -28,7 +28,7 @@ const Skills = () => {
             <Magnetic>
             <motion.p variants={SkilNameAnimation} className="text-gray-500 w-fit text-sm lg:text-base">{skill}</motion.p>
             </Magnetic>
-            <motion.div variants={SkilNameAnimation} className="w-full h-1 bg-gray-200 relative rounded-md overflow-hidden">
+            <motion.div variants={SkilNameAnimation} className="w-full h-1 bg-[var(--track)] relative rounded-md overflow-hidden">
               <motion.div variants={SkilAnimation}
                 className="h-2 bg-red-400 origin-left"
                 style={{ width: percent }}
@@ -36,13 +36,13 @@ const Skills = () => {
             </motion.div>
           </div>
         ))}
-        <motion.div variants={SkilAnimation} className='w-full h-px bg-gray-300 rounded-md my-10'></motion.div>
+        <motion.div variants={SkilAnimation} className='w-full h-px bg-[var(--divider)] rounded-md my-10'></motion.div>
         {Object.entries(Languages).map(([language, percent]) => (
           <div key={language} className="mb-4">
             <Magnetic>
             <motion.p variants={SkilNameAnimation} className="text-gray-500 w-fit text-sm lg:text-base">{language}</motion.p>
             </Magnetic>
-            <motion.div variants={SkilNameAnimation} className="w-full h-1 bg-gray-200 relative rounded-md overflow-hidden">
+            <motion.div variants={SkilNameAnimation} className="w-full h-1 bg-[var(--track)] relative rounded-md overflow-hidden">
               <motion.div variants={SkilAnimation}
                 className="h-2 bg-red-400 origin-left"
                 style={{ width: percent }}

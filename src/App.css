@@ -4,8 +4,64 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* --- Theme tokens ---------------------------------------------------------
+   Light is the original look; dark is applied via `.dark` on <html> (set by
+   ThemeProvider, and pre-paint by the inline script in index.html). Components
+   reference these with Tailwind arbitrary values, e.g. `bg-[var(--line)]`. */
+:root {
+    --bg: #f0f0f0;
+    --fg: #3e3e3d;
+    --line: #3e3e3d;      /* dividers / underlines */
+    --fg-strong: #0c0a09; /* was text-stone-950 */
+    --track: #e5e7eb;     /* was bg-gray-200 (skill bar track) */
+    --divider: #d1d5db;   /* was bg-gray-300 */
+}
+
+:root.dark {
+    --bg: #161226;
+    --fg: #d9d9d6;
+    --line: #d9d9d6;
+    --fg-strong: #ffffff;
+    --track: #2a2b2e;
+    --divider: #3a3b3e;
+}
+
 body{
-    color: #3e3e3d;
+    color: var(--fg);
+    background: var(--bg);
+    transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+/* --- Theme toggle button --------------------------------------------------- */
+.theme-toggle {
+    position: fixed;
+    /* Centre vertically without `transform` — framer-motion's whileHover/whileTap
+       write `transform`, which would otherwise clobber a translate here. */
+    top: calc(50% - 20px);
+    right: 1rem;
+    /* Above drei's <Html>/<Scroll html> layers so it's visible + clickable. */
+    z-index: 2147483645;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid var(--fg);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(4px);
+    color: var(--fg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    transition: color 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+}
+
+/* Full-screen circular wipe played while the theme flips underneath it. */
+.theme-wipe {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483644;
+    pointer-events: none;
+    will-change: clip-path;
 }
 
 /* --- Custom cursor --------------------------------------------------------
@@ -24,7 +80,8 @@ body{
     left: 0;
     pointer-events: none;
     border-radius: 50%;
-    z-index: 9999;
+    /* Above drei's <Html>/<Scroll html> layers (which go up to ~16.7M). */
+    z-index: 2147483646;
     mix-blend-mode: difference;
     will-change: transform;
 }
@@ -49,7 +106,7 @@ a:focus-visible,
 button:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-    outline: 2px solid #3e3e3d;
+    outline: 2px solid var(--fg);
     outline-offset: 3px;
     border-radius: 3px;
 }
@@ -264,6 +321,9 @@ button:focus-visible,
 .roundedButton p {
     position: relative;
     z-index: 1;
+    /* The button is always light pink, so keep the label dark (not the themed
+       foreground) so it stays readable in dark mode too. Hover turns it white. */
+    color: #3e3e3d;
     transition: color 0.4s linear;
 
 

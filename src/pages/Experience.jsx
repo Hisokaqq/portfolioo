@@ -7,10 +7,12 @@ import HtmlPart from '../components/HtmlPart'
 import { useNavigate } from 'react-router-dom'
 import Bubble from '../3dmodels/Bubble'
 import { pageVariants } from '../helpers/AnimationVar'
+import { useTheme } from '../helpers/ThemeContext'
 
 const Experience = () => {
     const [perfSucks, degrade] = useState(false)
     const [isOpen, setIsOpen] = useState(true)
+    const { theme } = useTheme()
     const navigate = useNavigate()
     const navigateTo = (to) => {
       navigate(to)
@@ -25,10 +27,10 @@ const Experience = () => {
           camera={{ position: [20, 0.9, 20], fov: 26 }}
         >
           <PerformanceMonitor onDecline={() => degrade(true)} />
-          <color attach="background" args={['#f0f0f0']} />
+          <color attach="background" args={[theme === 'dark' ? '#161226' : '#f0f0f0']} />
           <Suspense fallback={null}>
           <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
-            <Env perfSucks={perfSucks} />
+            <Env perfSucks={perfSucks} theme={theme} />
           </group>
           </Suspense>
           <Html fullscreen  style={{ position: "absolute", left:0, top:0, transform: "translate(-50%, -50%)" }}>
