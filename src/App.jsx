@@ -7,11 +7,13 @@ import Projects from './pages/Projects'
 import Me_contact from './pages/Me_contact'
 import SingleProject from './pages/SingleProject'
 import NotFound from './pages/NotFound'
+import CustomCursor from './components/CustomCursor'
 
 function App() {
   const location = useLocation();
   return (
     <main className="app h-[100dvh] w-[100%]">
+      <CustomCursor />
       <AnimatePresence mode={ "wait"}>
 
       <Routes location={ location} key={location.pathname}>

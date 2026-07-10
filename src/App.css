@@ -8,6 +8,41 @@ body{
     color: #3e3e3d;
 }
 
+/* --- Custom cursor --------------------------------------------------------
+   When active, hide the native cursor everywhere. `!important` also overrides
+   the inline `cursor: pointer` set on 3D thumbnails (so no native cursor peeks
+   through) while the JS still reads that inline value to grow the ring. */
+.custom-cursor-active,
+.custom-cursor-active * {
+    cursor: none !important;
+}
+
+.cursor-ring,
+.cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    will-change: transform;
+}
+
+.cursor-ring {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border: 1.5px solid #fff;
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: #fff;
+}
+
 /* Visible keyboard focus (native buttons here use transparent/border-0, which
    otherwise removes the default ring). */
 a:focus-visible,
