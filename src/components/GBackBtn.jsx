@@ -1,13 +1,30 @@
-import { motion } from 'framer-motion-3d'
+import { motion } from 'framer-motion'
+import { FiArrowLeft } from 'react-icons/fi'
+import Magnetic from './Magnetic'
 
-const GBackBtn = ({goBack}) => {
+const GBackBtn = ({ goBack }) => {
   return (
-    <div className="fixed top-0 left-0">
-      <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition:{duration:1, delay: .5}}} className="fixed top-0 left-0 ">
-        <button type="button" onClick={goBack} className="font-bold p-3 text-lg text-[var(--fg-strong)] hover:text-gray-500 duration-300 cursor-pointer bg-transparent border-0">Go Back</button>
-      </motion.div>
-      <div className=""></div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.4 } }}
+      className="fixed top-3 left-3 z-50"
+    >
+      {/* Magnetic pulls the whole pill toward the cursor (gsap transforms the
+          button), so the arrow/label movement lives on inner spans via
+          group-hover to avoid clobbering that transform. */}
+      <Magnetic>
+        <button
+          type="button"
+          onClick={goBack}
+          aria-label="Go back"
+          data-cursor
+          className="go-back group flex items-center gap-2 rounded-full pl-3 pr-4 py-2 text-sm font-semibold"
+        >
+          <FiArrowLeft className="text-base transition-transform duration-300 ease-out group-hover:-translate-x-1" />
+          <span className="transition-transform duration-300 ease-out group-hover:translate-x-0.5">Back</span>
+        </button>
+      </Magnetic>
+    </motion.div>
   )
 }
 
