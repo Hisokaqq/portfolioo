@@ -71,6 +71,33 @@ body{
     border-color: var(--fg-strong);
 }
 
+/* Light-on-dark variant for placement over an always-black surface (the project
+   image viewer), independent of the site theme. Declared after `.go-back` /
+   `.go-back:hover` so it wins on equal specificity. */
+.go-back-dark {
+    color: #f5f5f4;
+    background: color-mix(in srgb, #000 55%, transparent);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.go-back-dark:hover {
+    color: #ffffff;
+    background: color-mix(in srgb, #000 75%, transparent);
+    border-color: #ffffff;
+}
+
+/* --- Thumbnail -> project "expand" morph ----------------------------------
+   A real <img> lifted off a clicked WebGL thumbnail (see MorphContext), sitting
+   just below the cursor/toggle/wipe layers and above everything else. */
+.morph-overlay {
+    position: fixed;
+    z-index: 2147483643;
+    object-fit: cover;
+    pointer-events: none;
+    background: #000;
+    will-change: left, top, width, height;
+}
+
 /* Full-screen circular wipe played while the theme flips underneath it. */
 .theme-wipe {
     position: fixed;

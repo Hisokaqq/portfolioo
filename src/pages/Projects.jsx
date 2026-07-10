@@ -10,13 +10,42 @@ import GBackBtn from '../components/GBackBtn'
 import ScrollHint from '../components/ScrollHint'
 import { pageVariants } from '../helpers/AnimationVar'
 import { useTheme } from '../helpers/ThemeContext'
+import { useMorph } from '../helpers/MorphContext'
 
-function Item({ url, scale, id, ...props }) {
+// Project the mesh's four plane corners through the camera to get its on-screen
+// pixel rect (in viewport coords), so the DOM morph overlay can start exactly
+// where the clicked thumbnail sits.
+function getScreenRect(mesh, camera, gl) {
+  if (!mesh) return null
+  const canvas = gl.domElement.getBoundingClientRect()
+  const v = new THREE.Vector3()
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity
+  mesh.updateWorldMatrix(true, false)
+  for (const [cx, cy] of [[-0.5, -0.5], [0.5, -0.5], [0.5, 0.5], [-0.5, 0.5]]) {
+    v.set(cx, cy, 0).applyMatrix4(mesh.matrixWorld).project(camera)
+    const sx = canvas.left + (v.x * 0.5 + 0.5) * canvas.width
+    const sy = canvas.top + (-v.y * 0.5 + 0.5) * canvas.height
+    minX = Math.min(minX, sx); maxX = Math.max(maxX, sx)
+    minY = Math.min(minY, sy); maxY = Math.max(maxY, sy)
+  }
+  return { left: minX, top: minY, width: maxX - minX, height: maxY - minY }
+}
+
+function Item({ url, scale, id, startMorph, ...props }) {
     const visible = useRef(false)
     const [hovered, hover] = useState(false)
     const ref = useIntersect((isVisible) => (visible.current = isVisible))
     const { height } = useThree((state) => state.viewport)
+    const camera = useThree((state) => state.camera)
+    const gl = useThree((state) => state.gl)
     const navigate = useNavigate()
+    const openProject = () => {
+      const rect = getScreenRect(ref.current, camera, gl)
+      // Use an absolute path (matches the project's first image) so the overlay
+      // <img> resolves correctly regardless of the current route.
+      if (rect) startMorph({ url: `/images/${id}.webp`, rect })
+      navigate(`project/${id}`)
+    }
     // Reset the cursor if we unmount while still hovering (e.g. on navigate).
     useEffect(() => () => { document.body.style.cursor = 'auto' }, [])
     useFrame((state, delta) => {
@@ -28,22 +57,22 @@ function Item({ url, scale, id, ...props }) {
     })
     return (
       <group {...props} >
-        <Image onClick={()=>navigate(`project/${id}`)} ref={ref} onPointerOver={() =>{ hover(true); document.body.style.cursor =  'pointer' }} onPointerOut={() => {hover(false); document.body.style.cursor =  'auto'}} scale={scale} url={url}  >
+        <Image onClick={openProject} ref={ref} onPointerOver={() =>{ hover(true); document.body.style.cursor =  'pointer' }} onPointerOut={() => {hover(false); document.body.style.cursor =  'auto'}} scale={scale} url={url}  >
         </Image>
       </group>
     )
   }
 
-  function Items() {
+  function Items({ startMorph }) {
     const { width: w, height: h } = useThree((state) => state.viewport)
     const scale= [w / 2 * 1.2, w / 4 * 1.2, 1];
     return (
       <Scroll>
-        <Item id="1" url="../images/1.webp" scale={scale} position={[-w / 6, 0, 0]} />
-        <Item id="2" url="../images/2.webp" scale={scale} position={[w / 30, -h, 0]} />
-        <Item id="3" url="../images/3.webp" scale={scale} position={[w / 10, -h * 1.75, 0]} />
-        <Item id="4" url="../images/4.webp" scale={scale} position={[-w / 4, -h * 2.6, 0]} />
-        <Item id="5" url="../images/5.webp" scale={scale} position={[-w / 6, -h * 3.8, 0]} />
+        <Item id="1" url="../images/1.webp" scale={scale} position={[-w / 6, 0, 0]} startMorph={startMorph} />
+        <Item id="2" url="../images/2.webp" scale={scale} position={[w / 30, -h, 0]} startMorph={startMorph} />
+        <Item id="3" url="../images/3.webp" scale={scale} position={[w / 10, -h * 1.75, 0]} startMorph={startMorph} />
+        <Item id="4" url="../images/4.webp" scale={scale} position={[-w / 4, -h * 2.6, 0]} startMorph={startMorph} />
+        <Item id="5" url="../images/5.webp" scale={scale} position={[-w / 6, -h * 3.8, 0]} startMorph={startMorph} />
       </Scroll>
     )
   }
@@ -52,10 +81,12 @@ const Projects = () => {
   const navigate = useNavigate()
   const [perfSucks] = useState(false)
   const { theme } = useTheme()
+  const { startMorph } = useMorph()
 
   const goBack = () => navigate("/")
   return (
     <motion.div className="h-screen w-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <GBackBtn goBack={goBack} />
     <Canvas   eventPrefix="client" camera={{ zoom: 1,  fov: 60  }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
     <color attach="background" args={[theme === 'dark' ? '#161226' : '#f0f0f0']} />
     <Suspense fallback={null}>
@@ -64,9 +95,8 @@ const Projects = () => {
     </group>
     <motion3d.group initial={{y: -20}} animate={{y: 0, transition:{duration:1}}}>
     <ScrollControls damping={.2} pages={5}>
-      <Items />
+      <Items startMorph={startMorph} />
       <Scroll html style={{ width: '100%' }}>
-      <GBackBtn goBack={goBack} />
       <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition:{duration:1, delay: .5}}}>
         <h1 className="h1" style={{ position: 'absolute', top: '180vh', left: '10vw' }}>creating</h1>
         <h1 className="h1" style={{ position: 'absolute', top: `100vh`, right: '20vw', transform: `translate3d(0,-100%,0)` }}>awesome</h1>

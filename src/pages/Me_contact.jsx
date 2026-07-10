@@ -23,6 +23,7 @@ const Me_contact = () => {
 
   return (
     <motion.div className="h-full w-full" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+        <GBackBtn goBack={goBack} />
         <Canvas
           shadows
           dpr={[1, perfSucks ? 1 : 2]}
@@ -57,9 +58,6 @@ const Me_contact = () => {
           </Suspense>
           <ScrollControls  damping={.05} pages={1.3} html style={{ width: '100%'}}>
             <Scroll html style={{ width: '100%',}}>
-            <div style={{ width: '100%' }}>
-            <GBackBtn goBack={goBack} />
-          </div>
           <div className="h-[100dvh]">
             <Me />
             <Contact />

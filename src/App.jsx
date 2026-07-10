@@ -10,11 +10,13 @@ import NotFound from './pages/NotFound'
 import CustomCursor from './components/CustomCursor'
 import ThemeToggle from './components/ThemeToggle'
 import { ThemeProvider } from './helpers/ThemeContext'
+import { MorphProvider } from './helpers/MorphContext'
 
 function App() {
   const location = useLocation();
   return (
     <ThemeProvider>
+    <MorphProvider>
     <main className="app h-[100dvh] w-[100%]">
       <CustomCursor />
       <ThemeToggle />
@@ -44,6 +46,7 @@ function App() {
       </Routes>
       </AnimatePresence>
     </main>
+    </MorphProvider>
     </ThemeProvider>
   )
 }
