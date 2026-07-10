@@ -6,11 +6,12 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Projects from './pages/Projects'
 import Me_contact from './pages/Me_contact'
 import SingleProject from './pages/SingleProject'
+import NotFound from './pages/NotFound'
 
 function App() {
   const location = useLocation();
   return (
-    <div className="app h-[100vh] w-[100%]">
+    <div className="app h-[100dvh] w-[100%]">
       <AnimatePresence mode={ "wait"}>
 
       <Routes location={ location} key={location.pathname}>
@@ -27,9 +28,13 @@ function App() {
             path="/projects"
             element={<Projects  />}
           /> 
-       <Route 
+       <Route
             path="/projects/project/:id"
             element={<SingleProject />} />
+      <Route
+            path="*"
+            element={<NotFound />}
+          />
       </Routes>
       </AnimatePresence>
     </div>

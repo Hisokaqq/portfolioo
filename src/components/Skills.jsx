@@ -1,9 +1,8 @@
-import React from 'react'
 import { motion } from "framer-motion";
 import { SkilAnimation, SkilContAnimation, SkilNameAnimation } from '../helpers/AnimationVar';
 import Magnetic from './Magnetic';
 
-const Skills = {
+const skillLevels = {
   Html: "100%",
   React: "90%",
   Django: "90%",
@@ -21,10 +20,10 @@ const Languages = {
   Russian: "100%"
 };
 
-const Skils = () => {
+const Skills = () => {
   return (
     <motion.div className="xl:w-[30%] lg:w-[40%] md:w-[50%] w-[100%] " variants={SkilContAnimation} initial="hidden" animate="show">
-        {Object.entries(Skills).map(([skill, percent]) => (
+        {Object.entries(skillLevels).map(([skill, percent]) => (
           <div key={skill} className="mb-4">
             <Magnetic>
             <motion.p variants={SkilNameAnimation} className="text-gray-500 w-fit text-sm lg:text-base">{skill}</motion.p>
@@ -55,4 +54,4 @@ const Skils = () => {
   )
 }
 
-export default Skils
+export default Skills

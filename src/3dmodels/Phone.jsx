@@ -1,40 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef } from 'react'
 import { Text, useGLTF } from '@react-three/drei'
 import { motion } from 'framer-motion-3d'
 import { RoundedBox } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import useIsMobile from '../helpers/useIsMobile'
 
 export function Model(props) {
   const { nodes, materials } = useGLTF('/phone.glb')
   const ScrollerMesh = useRef()
-  const rotationAxis = new THREE.Vector3(0, 1, 0) 
+  const rotationAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
 
   useFrame(() => {
-    ScrollerMesh.current.rotateOnAxis(rotationAxis, 0.03)
+    if (ScrollerMesh.current) ScrollerMesh.current.rotateOnAxis(rotationAxis, 0.03)
   })
-  const [scale, setScale] = useState(0.22);
-  const [pos, setPos] = useState([0, 0, 0]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 950) {
-        setScale(0.13);
-        setPos([-2.5, .5, 0]);
-
-      } else {
-        setScale(0.22);
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const isMobile = useIsMobile(950)
+  const scale = isMobile ? 0.13 : 0.22
+  const pos = isMobile ? [-2.5, 0.5, 0] : [0, 0, 0]
 
   return (
     <motion.group 

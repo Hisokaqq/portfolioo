@@ -13,8 +13,7 @@ function Env({ perfSucks }) {
       }
     })
     return (
-      <Environment frames={perfSucks ? 1 : Infinity} preset="city" resolution={256} background blur={0.8}>
-        <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
+      <Environment frames={perfSucks ? 1 : Infinity} preset="city" resolution={perfSucks ? 128 : 256} background blur={0.8}>
         <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
         <group rotation={[Math.PI / 2, 1, 0]}>
           {[2, -2, 2, -4, 2, -5, 2, -9].map((x, i) => (

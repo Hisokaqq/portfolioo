@@ -1,10 +1,11 @@
 import { useFrame } from '@react-three/fiber';
-import React, { useMemo, useRef, useEffect, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { MathUtils } from "three";
 import vertexShader from '../helpers/vertexShader';
 import fragmentShader from '../helpers/fragmentShader';
 import { motion } from 'framer-motion-3d';
 import { moveAnimation } from '../helpers/AnimationVar';
+import useIsMobile from '../helpers/useIsMobile';
 
 const variants = {
   open: { scale: 1 },
@@ -17,27 +18,9 @@ const Bubble = ({ isOpen }) => {
   const uniforms = useMemo(() => ({
     u_time: { value: 0 },
     u_intensity: { value: 0.3 },
-  }));
+  }), []);
 
-  const [scale, setScale] = useState(0.6);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 800) {
-        setScale(0.3);
-      } else {
-        setScale(0.6);
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const scale = useIsMobile(800) ? 0.3 : 0.6;
 
   useFrame((state) => {
     const { clock } = state;

@@ -1,13 +1,13 @@
-import React from 'react'
 import * as THREE from 'three'
 import { useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useIntersect, Image, ScrollControls, Scroll, Html } from '@react-three/drei'
+import { useIntersect, Image, ScrollControls, Scroll } from '@react-three/drei'
 import { motion as motion3d} from 'framer-motion-3d'
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {  useNavigate } from 'react-router-dom'
 import Env from '../components/Env'
 import GBackBtn from '../components/GBackBtn'
+import useAnimatedNavigate from '../helpers/useAnimatedNavigate'
 
 function Item({ url, scale, id, ...props }) {
     const visible = useRef(false)
@@ -33,34 +33,26 @@ function Item({ url, scale, id, ...props }) {
     const scale= [w / 2 * 1.2, w / 4 * 1.2, 1];
     return (
       <Scroll>
-        <Item id="1" url="../images/1.png" scale={scale} position={[-w / 6, 0, 0]} />
-        <Item id="2" url="../images/2.png" scale={scale} position={[w / 30, -h, 0]} />
-        <Item id="3" url="../images/3.png" scale={scale} position={[w / 10, -h * 1.75, 0]} />
-        <Item id="4" url="../images/4.png" scale={scale}position={[-w / 4, -h * 2.6, 0]} />
-        <Item id="5" url="../images/5.png" scale={scale} position={[-w / 6, -h * 3.8, 0]} />
+        <Item id="1" url="../images/1.webp" scale={scale} position={[-w / 6, 0, 0]} />
+        <Item id="2" url="../images/2.webp" scale={scale} position={[w / 30, -h, 0]} />
+        <Item id="3" url="../images/3.webp" scale={scale} position={[w / 10, -h * 1.75, 0]} />
+        <Item id="4" url="../images/4.webp" scale={scale} position={[-w / 4, -h * 2.6, 0]} />
+        <Item id="5" url="../images/5.webp" scale={scale} position={[-w / 6, -h * 3.8, 0]} />
       </Scroll>
     )
   }
 
 const Projects = () => {
-  const navigate = useNavigate()
-  const control = useAnimation()
-  const control2 = useAnimation()
-  const [perfSucks, degrade] = useState(false)
+  const { control, control2, animateTo } = useAnimatedNavigate()
+  const [perfSucks] = useState(false)
 
-  const goBack = () => {
-        control.start({y:-20, transition: {duration: .3}})
-        control2.start({opacity: 0, transition: {duration: .3}})
-        setTimeout(() => {
-          navigate("/");
-        }, 300); 
-  }
+  const goBack = () => animateTo("/")
   return (
     <div className="h-screen w-screen">
     <Canvas   eventPrefix="client" camera={{ zoom: 1,  fov: 60  }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
     <color attach="background" args={['#f0f0f0']} />
     <group position={[0, -0.5, 0]} rotation={[0, -0.75, 0]}>
-w       <Env perfSucks={perfSucks} />
+        <Env perfSucks={perfSucks} />
     </group>
     <motion3d.group animate={control}>
     <motion3d.group initial={{y: -20}} animate={{y: 0, transition:{duration:1}}}>

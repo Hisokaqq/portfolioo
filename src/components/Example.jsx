@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { wrap } from "popmotion";
 
@@ -43,6 +43,7 @@ const Example = ({images}) => {
         <motion.img
           key={page}
           src={images[imageIndex]}
+          alt={`Project screenshot ${imageIndex + 1} of ${images.length}`}
           custom={direction}
           variants={variants}
           initial="enter"
@@ -66,12 +67,12 @@ const Example = ({images}) => {
           }}
         />
       </AnimatePresence>
-      <div className="next" onClick={() => paginate(1)}>
+      <button type="button" aria-label="Next image" className="next" onClick={() => paginate(1)}>
         {"‣"}
-      </div>
-      <div className="prev" onClick={() => paginate(-1)}>
+      </button>
+      <button type="button" aria-label="Previous image" className="prev" onClick={() => paginate(-1)}>
         {"‣"}
-      </div>
+      </button>
     </>
   );
 };

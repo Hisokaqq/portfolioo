@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Btn from './Btn';
 import Magnetic from './Magnetic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import  {AiOutlineCopy} from 'react-icons/ai'
+import useIsMobile from '../helpers/useIsMobile';
 
 const Contact = () => {
   const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
@@ -22,17 +23,7 @@ const Contact = () => {
     setTimeout(() => setCopiedEmailAddress(false), 1500); // Reset the copied state after 1.5 seconds
   };
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const isMobile = useIsMobile(768);
 
   return (
     <motion.div className="h-[30vh] w-full flex items-center justify-center relative">
@@ -61,6 +52,10 @@ const Contact = () => {
         <motion.div className="flex-col lg:flex gap-1 mt-5">
           <CopyToClipboard text="+43 660 7890132" onCopy={handleCopyPhoneNumber}>
             <div
+              role="button"
+              tabIndex={0}
+              aria-label="Copy phone number"
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.click(); } }}
               className={`cursor-pointer text-sm relative w-fit flex gap-1`}
             >
               <p className='hover:text-gray-500 transition-all duration-200'>+43 660 7890132</p>
@@ -80,6 +75,10 @@ const Contact = () => {
 
           <CopyToClipboard text="burtynoleksandr@gmail.com" onCopy={handleCopyEmailAddress}>
             <div
+              role="button"
+              tabIndex={0}
+              aria-label="Copy email address"
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.click(); } }}
               className={` cursor-pointer text-sm relative w-fit flex gap-1`}
             >
               <p className='hover:text-gray-500 transition-all duration-200'>burtynoleksandr@gmail.com</p>
@@ -100,28 +99,34 @@ const Contact = () => {
       </div>
       <div className="w-full h-10 absolute bottom-0 px-8 py-0 flex flex-row-reverse gap-5">
         <Magnetic>
-          <p
+          <a
             className="text-sm cursor-pointer"
-            onClick={() => window.open('https://www.instagram.com/hisokaxix/')}
+            href="https://www.instagram.com/hisokaxix/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Instagram
-          </p>
+          </a>
         </Magnetic>
         <Magnetic>
-          <p
+          <a
             className="text-sm cursor-pointer"
-            onClick={() => window.open('https://www.linkedin.com/in/alexandr-burtyn-397534266/')}
+            href="https://github.com/Hisokaqq"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Github
-          </p>
+          </a>
         </Magnetic>
         <Magnetic>
-          <p
+          <a
             className="text-sm cursor-pointer"
-            onClick={() => window.open('https://github.com/Hisokaqq')}
+            href="https://www.linkedin.com/in/alexandr-burtyn-397534266/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             LinkedIn
-          </p>
+          </a>
         </Magnetic>
       </div>
     </motion.div>
