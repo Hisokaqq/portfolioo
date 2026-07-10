@@ -9,6 +9,7 @@ import SingleProject from './pages/SingleProject'
 import NotFound from './pages/NotFound'
 import CustomCursor from './components/CustomCursor'
 import ThemeToggle from './components/ThemeToggle'
+import CommandPalette from './components/CommandPalette'
 import { ThemeProvider } from './helpers/ThemeContext'
 import { MorphProvider } from './helpers/MorphContext'
 
@@ -20,6 +21,7 @@ function App() {
     <main className="app h-[100dvh] w-[100%]">
       <CustomCursor />
       <ThemeToggle />
+      <CommandPalette />
       <AnimatePresence mode={ "wait"}>
 
       <Routes location={ location} key={location.pathname}>
