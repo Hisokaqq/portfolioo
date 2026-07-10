@@ -13,8 +13,10 @@ import {
   FiInstagram,
   FiMoon,
   FiSun,
+  FiMousePointer,
 } from 'react-icons/fi'
 import { useTheme } from '../helpers/ThemeContext'
+import { useCursor } from '../helpers/CursorContext'
 
 const EMAIL = 'burtynoleksandr@gmail.com'
 const PHONE = '+43 660 7890132'
@@ -48,6 +50,7 @@ const CommandPalette = () => {
   const listRef = useRef(null)
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
+  const { cursorEnabled, toggleCursor } = useCursor()
 
   const showToast = useCallback((msg) => {
     setToast(msg)
@@ -69,12 +72,20 @@ const CommandPalette = () => {
       run: toggleTheme,
       keep: true,
     },
+    {
+      id: 'cursor',
+      section: 'Actions',
+      label: cursorEnabled ? 'Disable custom cursor' : 'Enable custom cursor',
+      icon: <FiMousePointer />,
+      run: toggleCursor,
+      keep: true,
+    },
     { id: 'email', section: 'Actions', label: 'Copy email', hint: EMAIL, icon: <FiMail />, run: () => { copy(EMAIL); showToast('Copied email') }, keep: true },
     { id: 'phone', section: 'Actions', label: 'Copy phone number', hint: PHONE, icon: <FiPhone />, run: () => { copy(PHONE); showToast('Copied phone number') }, keep: true },
     { id: 'github', section: 'Socials', label: 'GitHub', icon: <FiGithub />, run: () => openExternal('https://github.com/Hisokaqq') },
     { id: 'linkedin', section: 'Socials', label: 'LinkedIn', icon: <FiLinkedin />, run: () => openExternal('https://www.linkedin.com/in/alexandr-burtyn-397534266/') },
     { id: 'instagram', section: 'Socials', label: 'Instagram', icon: <FiInstagram />, run: () => openExternal('https://www.instagram.com/hisokaxix/') },
-  ], [theme, navigate, toggleTheme, showToast])
+  ], [theme, navigate, toggleTheme, showToast, cursorEnabled, toggleCursor])
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()

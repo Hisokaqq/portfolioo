@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useCursor } from '../helpers/CursorContext';
 
 // Elements that should trigger the "hover" (grown) cursor state.
 const INTERACTIVE = 'a, button, [role="button"], input, textarea, label, [data-cursor]';
@@ -19,6 +20,7 @@ const CustomCursor = () => {
   const [down, setDown] = useState(false);
   const [visible, setVisible] = useState(false);
   const [enabled, setEnabled] = useState(false);
+  const { cursorEnabled } = useCursor();
 
   // Raw pointer position.
   const x = useMotionValue(-100);
@@ -31,6 +33,8 @@ const CustomCursor = () => {
   const dotY = useSpring(y, { stiffness: 900, damping: 40 });
 
   useEffect(() => {
+    // Respect the user's toggle (from the command palette).
+    if (!cursorEnabled) { setEnabled(false); return; }
     // Skip entirely on touch / coarse-pointer devices.
     if (typeof window === 'undefined' || !window.matchMedia('(pointer: fine)').matches) return;
 
@@ -68,7 +72,7 @@ const CustomCursor = () => {
       document.removeEventListener('mouseenter', onEnter);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cursorEnabled]);
 
   if (!enabled) return null;
 

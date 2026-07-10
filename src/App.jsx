@@ -9,18 +9,22 @@ import SingleProject from './pages/SingleProject'
 import NotFound from './pages/NotFound'
 import CustomCursor from './components/CustomCursor'
 import ThemeToggle from './components/ThemeToggle'
+import CursorToggle from './components/CursorToggle'
 import CommandPalette from './components/CommandPalette'
 import { ThemeProvider } from './helpers/ThemeContext'
+import { CursorProvider } from './helpers/CursorContext'
 import { MorphProvider } from './helpers/MorphContext'
 
 function App() {
   const location = useLocation();
   return (
     <ThemeProvider>
+    <CursorProvider>
     <MorphProvider>
     <main className="app h-[100dvh] w-[100%]">
       <CustomCursor />
       <ThemeToggle />
+      <CursorToggle />
       <CommandPalette />
       <AnimatePresence mode={ "wait"}>
 
@@ -49,6 +53,7 @@ function App() {
       </AnimatePresence>
     </main>
     </MorphProvider>
+    </CursorProvider>
     </ThemeProvider>
   )
 }
