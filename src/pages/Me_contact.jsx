@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useCallback, useRef, useState } from "react";
 import Env from "../components/Env";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import GBackBtn from "../components/GBackBtn";
 import Me from "../components/Me";
+import Timeline from "../components/Timeline";
 import Contact from "../components/Contact";
 import ScrollHint from "../components/ScrollHint";
 import { Model } from "../3dmodels/Phone";
@@ -22,11 +23,38 @@ import useIsMobile from "../helpers/useIsMobile";
 
 const Me_contact = () => {
   const [perfSucks, degrade] = useState(false);
+  // The Timeline section has variable height (font wrapping, tag count), so
+  // the scroll distance can't be a hardcoded constant like the old `1.3` —
+  // it's measured from the actual rendered content and fed back into
+  // ScrollControls.
+  const [pages, setPages] = useState(2.3);
+  const resizeObserverRef = useRef(null);
   const { theme } = useTheme();
   const navigate = useNavigate();
   const isMobile = useIsMobile(768);
 
   const goBack = () => navigate("/");
+
+  // `<Scroll html>` mounts its children into a *separate* react-dom root
+  // (see drei's ScrollHtml), which commits after this component's own
+  // commit — a regular ref set in a `useEffect`/`useLayoutEffect` here would
+  // still read `null`. A callback ref fires whenever that other root attaches
+  // the node, whichever tick that happens on.
+  const setContentRef = useCallback((el) => {
+    resizeObserverRef.current?.disconnect();
+    resizeObserverRef.current = null;
+    if (!el) return;
+
+    const measure = () => {
+      const next = el.getBoundingClientRect().height / window.innerHeight;
+      setPages((prev) => (Math.abs(prev - next) > 0.03 ? next : prev));
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    resizeObserverRef.current = ro;
+  }, []);
 
   return (
     <motion.div
@@ -85,13 +113,14 @@ const Me_contact = () => {
         </Suspense>
         <ScrollControls
           damping={0.1}
-          pages={1.3}
+          pages={pages}
           html
           style={{ width: "100%" }}
         >
           <Scroll html style={{ width: "100%" }}>
-            <div className="h-[100dvh]">
+            <div ref={setContentRef} className="w-full">
               <Me />
+              <Timeline />
               <Contact />
             </div>
             <ScrollHint />

@@ -4,6 +4,9 @@ import { useCursor } from '../helpers/CursorContext';
 
 // Elements that should trigger the "hover" (grown) cursor state.
 const INTERACTIVE = 'a, button, [role="button"], input, textarea, label, [data-cursor]';
+// Non-interactive prose that should still acknowledge the cursor, but more
+// subtly than a clickable — see the timeline on /me. Opt in with `data-cursor-text`.
+const TEXT = '[data-cursor-text]';
 
 /**
  * A framer-motion custom cursor:
@@ -17,6 +20,7 @@ const INTERACTIVE = 'a, button, [role="button"], input, textarea, label, [data-c
  */
 const CustomCursor = () => {
   const [hovered, setHovered] = useState(false);
+  const [textHovered, setTextHovered] = useState(false);
   const [down, setDown] = useState(false);
   const [visible, setVisible] = useState(false);
   const [enabled, setEnabled] = useState(false);
@@ -51,6 +55,7 @@ const CustomCursor = () => {
         // 3D thumbnails / anything that set the body cursor to pointer.
         document.body.style.cursor === 'pointer';
       setHovered(interactive);
+      setTextHovered(!interactive && !!(t && t.closest && t.closest(TEXT)));
     };
     const onDown = () => setDown(true);
     const onUp = () => setDown(false);
@@ -82,7 +87,7 @@ const CustomCursor = () => {
         className="cursor-ring"
         style={{ x: ringX, y: ringY }}
         animate={{
-          scale: down ? 0.75 : hovered ? 2.6 : 1,
+          scale: down ? 0.75 : hovered ? 2.6 : textHovered ? 1.6 : 1,
           opacity: visible ? 1 : 0,
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 22 }}
@@ -91,7 +96,7 @@ const CustomCursor = () => {
         className="cursor-dot"
         style={{ x: dotX, y: dotY }}
         animate={{
-          scale: hovered ? 0 : down ? 0.6 : 1,
+          scale: hovered ? 0 : down ? 0.6 : textHovered ? 0.5 : 1,
           opacity: visible ? 1 : 0,
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 22 }}
