@@ -85,7 +85,7 @@ const Projects = () => {
 
   const goBack = () => navigate("/")
   return (
-    <motion.div className="h-screen w-screen" variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <motion.div className="h-[100dvh] w-full overflow-hidden" variants={pageVariants} initial="initial" animate="animate" exit="exit">
     <GBackBtn goBack={goBack} />
     <Canvas   eventPrefix="client" camera={{ zoom: 1,  fov: 60  }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
     <color attach="background" args={[theme === 'dark' ? '#161226' : '#f0f0f0']} />

@@ -30,7 +30,7 @@ export default function Btn({children, backgroundColor="bg-red-400", ...attribut
 
   return (
     <Magnetic>
-      <div className="roundedButton" style={{overflow: "hidden"}} onMouseEnter={() => {manageMouseEnter()}} onMouseLeave={() => {manageMouseLeave()}} {...attributes}>
+      <div className="roundedButton" style={{overflow: "hidden"}} onMouseEnter={() => {manageMouseEnter()}} onMouseLeave={() => {manageMouseLeave()}} onTouchStart={() => {manageMouseEnter()}} onTouchEnd={() => {manageMouseLeave()}} {...attributes}>
           {
             children
           }

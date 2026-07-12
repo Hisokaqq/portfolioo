@@ -37,12 +37,13 @@ body{
     position: fixed;
     /* Centre vertically without `transform` — framer-motion's whileHover/whileTap
        write `transform`, which would otherwise clobber a translate here. */
-    top: calc(50% - 20px);
-    right: 1rem;
+    top: calc(50% - 22px);
+    /* Keep clear of the notch / rounded corners on modern phones. */
+    right: calc(1rem + env(safe-area-inset-right, 0px));
     /* Above drei's <Html>/<Scroll html> layers so it's visible + clickable. */
     z-index: 2147483645;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,6 +59,14 @@ body{
 /* Custom-cursor toggle — same pill as the theme toggle, stacked just below it. */
 .cursor-toggle {
     top: calc(50% + 28px);
+}
+
+/* The custom cursor is disabled on touch devices, so its toggle is meaningless
+   there — hide it to avoid dead UI (and to declutter the edge on phones). */
+@media (hover: none) and (pointer: coarse) {
+    .cursor-toggle {
+        display: none;
+    }
 }
 
 .cursor-toggle-icon {
@@ -94,9 +103,11 @@ body{
     transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.go-back:hover {
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    border-color: var(--fg-strong);
+@media (hover: hover) {
+    .go-back:hover {
+        background: color-mix(in srgb, var(--bg) 85%, transparent);
+        border-color: var(--fg-strong);
+    }
 }
 
 /* Light-on-dark variant for placement over an always-black surface (the project
@@ -268,8 +279,8 @@ body{
    where there's no ⌘K). */
 .cmdk-trigger {
     position: fixed;
-    bottom: 16px;
-    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: calc(16px + env(safe-area-inset-right, 0px));
     z-index: 2147483642;
     display: flex;
     align-items: center;
@@ -285,9 +296,11 @@ body{
     transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.cmdk-trigger:hover {
-    color: var(--fg-strong);
-    border-color: var(--fg);
+@media (hover: hover) {
+    .cmdk-trigger:hover {
+        color: var(--fg-strong);
+        border-color: var(--fg);
+    }
 }
 
 .cmdk-trigger kbd {
@@ -304,6 +317,22 @@ body{
     font-size: 0.72rem;
     letter-spacing: 0.04em;
     opacity: 0.75;
+}
+
+/* On touch there's no keyboard, so the ⌘K / Ctrl hint is noise. Hide the kbd
+   keys and enlarge the tap target to a comfortable size (the "menu" label and
+   tap-to-open behaviour still work). */
+@media (hover: none) and (pointer: coarse) {
+    .cmdk-trigger kbd {
+        display: none;
+    }
+    .cmdk-trigger {
+        padding: 10px 14px;
+        gap: 0;
+    }
+    .cmdk-trigger-label {
+        font-size: 0.85rem;
+    }
 }
 
 /* While the palette is open, suppress the custom cursor and give the modal a
@@ -418,12 +447,16 @@ button:focus-visible,
 }
 
 
-.explore:hover h3 {
-    color: #838383;
-}
+/* Hover-only affordances are gated so they never "stick" after a tap on touch
+   devices (which emulate :hover until the next tap elsewhere). */
+@media (hover: hover) {
+    .explore:hover h3 {
+        color: #838383;
+    }
 
-.explore:hover .line {
-    background-color: #838383;
+    .explore:hover .line {
+        background-color: #838383;
+    }
 }
 
 .gradient-background {
@@ -498,12 +531,12 @@ button:focus-visible,
   
   .next,
   .prev {
-    top: calc(50% - 20px);
+    top: calc(50% - 22px);
     position: absolute;
     background: white;
     border-radius: 30px;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -609,10 +642,19 @@ button:focus-visible,
       font-size: 14px; /* You can also adjust the font size for smaller screens */
       margin-top: 2rem;
   }
+
+  /* Cap the decorative Projects headline on phones. The right-anchored words
+     ("projects,", "passion.") could otherwise overflow the viewport at the
+     original clamp's 8rem max. */
+  .h1 {
+      font-size: clamp(1.75rem, 9vw, 3.25rem);
+  }
 }
 
-.roundedButton:hover p {
-    color: white;
+@media (hover: hover) {
+    .roundedButton:hover p {
+        color: white;
+    }
 }
 
 .circle {

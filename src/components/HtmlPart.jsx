@@ -39,13 +39,15 @@ const HtmlPart = ({isOpen, setIsOpen, navigateTo}) => {
             <div className="line w-full h-[2px]  bg-[var(--line)]" />
         </motion.div>
         <motion.div variants={simpleAnimation} initial="hidden" animate="show" className="absolute left-0  bottom-0 p-2 sm:p-6 md:p-8  w-fit ">
-            <p className="md:text-sm lg:text-base text-xs mb-6">Passionate developer proficient <br/> in <span className="text-teal-500">Django</span>, <span className="text-cyan-500">React.js</span>, <span className="text-[var(--fg-strong)]">Next.js</span>, and <span className="text-[var(--fg-strong)]">Three.js</span>.</p>
+            <p className="md:text-sm lg:text-base text-sm mb-6">Passionate developer proficient <br/> in <span className="text-teal-500">Django</span>, <span className="text-cyan-500">React.js</span>, <span className="text-[var(--fg-strong)]">Next.js</span>, and <span className="text-[var(--fg-strong)]">Three.js</span>.</p>
             <div className="explore w-fit">
                 <motion.h3 onClick={()=>nav_anim("/projects")} role="button" tabIndex={0} aria-label="Go to projects page" onKeyDown={(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); nav_anim("/projects"); } }}  className="text-sm md:text-base lg:text-lg w-fit py-2 cursor-pointer">Take a look at my Projects</motion.h3>
                 <div className="line w-full h-[2px]  bg-[var(--line)]" />
             </div>
         </motion.div>
-        <motion.div aria-hidden="true" variants={parentAnimation} initial="hidden" animate="show" className=" p-2 sm:p-6 md:p-8 absolute right-0 bottom-0  flex flex-col gap-2 sm:gap-4 md:gap-6 lg:gap-8 2xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-xl">
+        {/* Extra bottom padding on mobile lifts the name clear of the fixed
+            command-palette ("menu") chip in the bottom-right corner. */}
+        <motion.div aria-hidden="true" variants={parentAnimation} initial="hidden" animate="show" className=" p-2 pb-16 sm:p-6 md:p-8 absolute right-0 bottom-0  flex flex-col gap-2 sm:gap-4 md:gap-6 lg:gap-8 2xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-xl">
             <Magnetic>
             <div className="flex w-full">
                <div className="overflow-hidden"> <motion.h1 variants={firstnameAnimation}  className="title " >B</motion.h1></div>

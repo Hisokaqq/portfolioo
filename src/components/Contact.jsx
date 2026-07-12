@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import  {AiOutlineCopy} from 'react-icons/ai'
-import useIsMobile from '../helpers/useIsMobile';
 
 const Contact = () => {
   const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
@@ -23,8 +22,6 @@ const Contact = () => {
     setTimeout(() => setCopiedEmailAddress(false), 1500); // Reset the copied state after 1.5 seconds
   };
 
-  const isMobile = useIsMobile(768);
-
   const email = 'burtynoleksandr@gmail.com';
   const handleGetInTouch = () => {
     window.location.href = `mailto:${email}`;
@@ -33,7 +30,7 @@ const Contact = () => {
   return (
     <motion.div className="h-[30vh] w-full flex items-center justify-center relative">
       <div className="md:w-[70%] w-[90%] ">
-        <motion.h1 className="lg:text-4xl text-sm">Let's work together</motion.h1>
+        <motion.h1 className="lg:text-4xl text-2xl">Let's work together</motion.h1>
         <div className="relative">
           <div className="relative overflow-hidden">
             <motion.div
@@ -44,10 +41,10 @@ const Contact = () => {
           </div>
           <motion.div
             ref={ref}
-            animate={inView ? { opacity: 1, x: isMobile ? 50 : 0  } : { opacity: 0, x: -100 }}
+            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
             transition={{ duration: 0.4 }}
           >
-            <motion.div className="w-32 h-32 absolute right-0 top-[-50%] translate-y-[-60%] ">
+            <motion.div className="w-24 h-24 md:w-32 md:h-32 absolute right-0 top-[-50%] translate-y-[-60%] ">
               <Btn
                 onClick={handleGetInTouch}
                 role="button"
@@ -60,14 +57,14 @@ const Contact = () => {
             </motion.div>
           </motion.div>
         </div>
-        <motion.div className="flex-col lg:flex gap-1 mt-5">
+        <motion.div className="flex flex-col gap-1 mt-5">
           <CopyToClipboard text="+43 660 7890132" onCopy={handleCopyPhoneNumber}>
             <div
               role="button"
               tabIndex={0}
               aria-label="Copy phone number"
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.click(); } }}
-              className={`cursor-pointer text-sm relative w-fit flex gap-1 hover:text-gray-500 transition-colors duration-200`}
+              className={`cursor-pointer text-sm relative w-fit flex gap-1 py-1 hover:text-gray-500 transition-colors duration-200`}
             >
               <p>+43 660 7890132</p>
               <AiOutlineCopy className="mt-[3px]"/>
@@ -91,7 +88,7 @@ const Contact = () => {
               tabIndex={0}
               aria-label="Copy email address"
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.click(); } }}
-              className={` cursor-pointer text-sm relative w-fit flex gap-1 hover:text-gray-500 transition-colors duration-200`}
+              className={` cursor-pointer text-sm relative w-fit flex gap-1 py-1 hover:text-gray-500 transition-colors duration-200`}
             >
               <p>burtynoleksandr@gmail.com</p>
             <AiOutlineCopy className="mt-[3px]"/>

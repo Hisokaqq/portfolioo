@@ -8,11 +8,13 @@ import { useNavigate } from 'react-router-dom'
 import Bubble from '../3dmodels/Bubble'
 import { pageVariants } from '../helpers/AnimationVar'
 import { useTheme } from '../helpers/ThemeContext'
+import useIsMobile from '../helpers/useIsMobile'
 
 const Experience = () => {
     const [perfSucks, degrade] = useState(false)
     const [isOpen, setIsOpen] = useState(true)
     const { theme } = useTheme()
+    const isMobile = useIsMobile(768)
     const navigate = useNavigate()
     const navigateTo = (to) => {
       navigate(to)
@@ -22,9 +24,10 @@ const Experience = () => {
     <motion.div className="h-full w-full" variants={pageVariants} initial="initial" animate="animate" exit="exit">
         <Canvas
           shadows
-          dpr={[1, perfSucks ? 1 : 2]}
+          dpr={[1, perfSucks ? 1 : isMobile ? 1.5 : 2]}
           eventPrefix="client"
-          camera={{ position: [20, 0.9, 20], fov: 26 }}
+          // Portrait phones need a wider FOV so the scene isn't cropped.
+          camera={{ position: [20, 0.9, 20], fov: isMobile ? 34 : 26 }}
         >
           <PerformanceMonitor onDecline={() => degrade(true)} />
           <color attach="background" args={[theme === 'dark' ? '#161226' : '#f0f0f0']} />
