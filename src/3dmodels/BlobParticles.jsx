@@ -1,19 +1,12 @@
 import { useFrame } from '@react-three/fiber';
 import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { PALETTE } from '../helpers/blobPalette';
 
 // Pool sizes cap how many particles can ever exist at once — buffers are
 // allocated once and reused (recycled) on every click instead of growing.
 const MAX_BURST = 50;
 const MAX_ORBIT = 8;
-
-// Blue / purple / cyan, matched to the blob's shader gradient (fragmentShader.js
-// derives R/G from vUv and locks B to 1.0, which reads as this same range).
-const PALETTE = [
-  new THREE.Color('#5aa9ff'),
-  new THREE.Color('#9d6bff'),
-  new THREE.Color('#4ce3e0'),
-];
 
 const particleVertexShader = `
   attribute float aScale;
