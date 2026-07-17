@@ -117,9 +117,27 @@ export const SkilNameAnimation = {
 export const AboutMeAnimation = {
   hidden: { opacity: 0 },
   show: { opacity: 1,
-    transition: { 
+    transition: {
       duration: .7,
       delay: .5
      }
+  }
+};
+
+export const GalleryListAnimation = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: .08,
+      when: "beforeChildren",
+      delayChildren: .2,
+    }
+  }
+};
+
+export const GalleryRowAnimation = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0,
+    transition: { duration: .5, ease: "easeOut" }
   }
 };

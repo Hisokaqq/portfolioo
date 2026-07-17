@@ -657,6 +657,106 @@ button:focus-visible,
     }
 }
 
+/* --- /projects gallery: cursor-driven preview list ------------------------- */
+
+/* Registering this as a Houdini custom property (rather than a plain CSS var)
+   is what lets the browser smoothly interpolate *through* the color itself
+   when JS swaps --gallery-accent on hover, instead of snapping instantly. */
+@property --gallery-accent {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+}
+
+/* Hovering a row leans the whole /projects backdrop toward that project's
+   accent color — the Env WebGL background gets its own (dark-mode-only) pull
+   toward the same color in Env.jsx; this DOM wash is the theme-agnostic
+   counterpart so light mode gets the same cue without recoloring the
+   blurred environment map. `soft-light` was the original blend here, but
+   over the light theme's near-white backdrop it has almost no visible
+   effect (soft-light can barely lighten an already-light surface) — that's
+   why the cue only ever showed up in dark mode. `multiply` actually reads
+   against a light backdrop. */
+.gallery-accent-wash {
+    position: absolute;
+    inset: -10vw;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 30% 45%, var(--gallery-accent), transparent 62%);
+    opacity: 0.22;
+    mix-blend-mode: multiply;
+    transition: --gallery-accent 0.6s ease;
+}
+
+.dark .gallery-accent-wash {
+    mix-blend-mode: screen;
+    opacity: 0.22;
+}
+
+/* No background/shadow/radius here on purpose — visuals (rounded corners,
+   shadow) live on the always-visible .gallery-preview-frame child instead,
+   whose own opacity fade is what shows/hides the box (an empty parent with
+   its own shadow would leave a visible "ghost" behind when nothing's
+   active). */
+.gallery-preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    pointer-events: none;
+    /* Centers the box on the cursor/focus point tracked by the x/y motion values. */
+    transform: translate(-50%, -50%);
+    will-change: transform;
+}
+
+/* react-three-fiber's <Canvas> sets its own wrapper div's pointer-events to
+   "auto" inline (for its internal raycasting) — since that's an inline
+   style, only an !important stylesheet rule can win back the "none" this
+   box needs. Without this, the preview (which is always centered exactly on
+   the cursor) ends up shadowing the cursor's own hit-testing on every
+   subsequent mousemove, breaking hover updates on the real row underneath. */
+.gallery-preview-frame > div {
+    pointer-events: none !important;
+}
+
+/* Soft scrim behind the title column so text stays legible over the Env
+   backdrop in both themes, without hiding the 3D scene entirely. */
+.gallery-scrim {
+    position: absolute;
+    inset: -4vw -6vw;
+    pointer-events: none;
+    background: radial-gradient(ellipse at left, color-mix(in srgb, var(--bg) 65%, transparent), transparent 70%);
+}
+
+/* The floating preview stands in for the custom cursor while a row is
+   hovered/focused — hide the ring/dot the same way the command palette does. */
+body.gallery-preview-active .cursor-ring,
+body.gallery-preview-active .cursor-dot {
+    opacity: 0 !important;
+}
+
+/* GitHub/Vercel row links — a clearer, more deliberate hover/focus cue than a
+   subtle opacity fade, since these sit right next to (and share hover-zone
+   with) the project title. */
+.gallery-icon-link {
+    display: flex;
+    color: var(--fg);
+    opacity: 0.6;
+    transition: opacity 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+@media (hover: hover) {
+    .gallery-icon-link:hover {
+        opacity: 1;
+        color: var(--fg-strong);
+        transform: scale(1.15);
+    }
+}
+
+.gallery-icon-link:focus-visible {
+    opacity: 1;
+    color: var(--fg-strong);
+}
+
 .circle {
     width: 100%;
     height: 150%;
